@@ -9,6 +9,13 @@ node_modules/
 *.pid
 *.pid.lock
 
+# ── SECURITY ────────────────────────────────────────────
+# The GitHub PAT must NEVER be committed to this repo.
+# Store it in: Netlify dashboard → Site → Environment variables → GITHUB_TOKEN
+# If you see a token in export-word.js, remove it immediately and revoke it at:
+# https://github.com/settings/tokens
+# ────────────────────────────────────────────────────────
+
 # Coverage
 coverage/
 *.lcov
@@ -55,4 +62,3 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-sample

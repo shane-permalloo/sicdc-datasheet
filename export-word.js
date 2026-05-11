@@ -21,11 +21,12 @@
 //   ⚠ This token is visible in browser source. Scope it to this repo only.
 //
 const GITHUB_CONFIG = {
-  owner:  'shane-permalloo',
-  repo:   'sicdc-datasheet',
-  branch: 'main',
-  folder: 'data',                          // subfolder in the repo for JSON files
-  token:  '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',
+  owner:   'shane-permalloo',
+  repo:    'sicdc-datasheet',
+  branch:  'main',
+  folder:  'data',                 // subfolder in the repo for JSON files
+  // ⚠ No token here — stored as GITHUB_TOKEN in Netlify Environment Variables.
+  // API calls are proxied through netlify/functions/github-proxy.js
   siteUrl: 'https://sicdc-datasheet.netlify.app'
 };
 // ──────────────────────────────────────────────────────────────────────────────
@@ -41,22 +42,20 @@ class SubmissionStore {
     this._sha     = null;   // current blob SHA required for GitHub PUT
   }
 
-  // ── GitHub API helpers ──────────────────────────────
+  // ── GitHub API helpers (via Netlify serverless proxy) ───
 
   get _apiBase() {
-    return `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${this.filePath}`;
+    // Requests go to the Netlify Function which injects GITHUB_TOKEN server-side
+    return `/.netlify/functions/github-proxy?file=${encodeURIComponent(this.filePath)}`;
   }
 
   get _headers() {
-    return {
-      Authorization: `token ${GITHUB_CONFIG.token}`,
-      Accept: 'application/vnd.github+json'
-    };
+    return { Accept: 'application/json' };
   }
 
-  /** Fetch the file from GitHub and populate the cache. */
+  /** Fetch the file from GitHub (via proxy) and populate the cache. */
   async load() {
-    const res = await fetch(`${this._apiBase}?ref=${GITHUB_CONFIG.branch}`, {
+    const res = await fetch(this._apiBase, {
       headers: this._headers
     });
     if (res.status === 404) {
