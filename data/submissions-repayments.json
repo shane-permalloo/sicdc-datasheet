@@ -1,7 +1,7 @@
 [
   {
     "id": "mp0wpcssl8ew",
-    "savedAt": "2026-05-11T07:54:59.212Z",
+    "savedAt": "2026-05-11T16:20:11.379Z",
     "data": {
       "fields": [
         {
@@ -10,19 +10,19 @@
         },
         {
           "label": "Repayment Type",
-          "value": ""
+          "value": "Commitment Fee Repayment"
         },
         {
           "label": "EXIM Claim Reference No",
-          "value": ""
+          "value": "fsdfs"
         },
         {
           "label": "Loan Facility Account Number",
-          "value": ""
+          "value": "dfgdfg"
         },
         {
           "label": "Repayment Amount",
-          "value": ""
+          "value": "2342432"
         },
         {
           "label": "Repayment Date",
@@ -41,7 +41,23 @@
           "value": ""
         }
       ],
-      "crudTables": []
+      "crudTables": [
+        {
+          "title": "Saved Submissions",
+          "headers": [
+            "#",
+            "Saved At",
+            "Summary"
+          ],
+          "rows": [
+            [
+              "1",
+              "11 May 2026 11:54",
+              "—"
+            ]
+          ]
+        }
+      ]
     }
   }
 ]
