@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Repayments – Data Entry Template</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f8f9fc;
+      color: #1e293b;
+      padding: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    @media print {
+      body { padding: 20px; background: #fff; }
+      .no-print { display: none; }
+    }
+
+    /* Header */
+    .form-header {
+      margin-bottom: 32px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    .form-header .breadcrumb {
+      font-size: 0.75rem;
+      color: #2563eb;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-bottom: 4px;
+    }
+    .form-header h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1e293b;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    /* Form layout */
+    .form-section {
+      margin-bottom: 24px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    .form-row.full {
+      grid-template-columns: 1fr;
+    }
+
+    /* Field group */
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #1e293b;
+    }
+    .field-label .required {
+      color: #dc2626;
+      margin-left: 2px;
+    }
+
+    .field-input {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 0.88rem;
+      font-family: 'Inter', sans-serif;
+      color: #1e293b;
+      background: #fff;
+      min-height: 44px;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    .field-input:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    .field-input::placeholder {
+      color: #94a3b8;
+    }
+
+    select.field-input {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2364748b' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+
+    input:disabled, input[readonly] {
+      background-color: #f1f5f9;
+      color: #64748b;
+    }
+
+    .field-hint {
+      font-size: 0.72rem;
+      color: #2563eb;
+      font-style: italic;
+      margin-top: 2px;
+    }
+
+    .field-note {
+      font-size: 0.72rem;
+      color: #64748b;
+      font-style: italic;
+      margin-top: 2px;
+    }
+
+    /* ── Related section / CRUD table ───── */
+    .related-section { margin-top: 32px; }
+    .related-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+    .related-header .section-title { font-size:0.92rem; font-weight:700; color:#1e293b; }
+    .btn { font-family:'Inter',sans-serif; font-size:0.8rem; font-weight:600; border:none; border-radius:6px; padding:8px 16px; cursor:pointer; transition:background 0.2s, transform 0.1s; }
+    .btn:active { transform:scale(0.96); }
+    .btn-ghost { background:transparent; color:#64748b; border:1px solid #e2e8f0; }
+    .btn-ghost:hover { background:#f1f5f9; }
+    .btn-primary { background:#2563eb; color:#fff; }
+    .btn-primary:hover { background:#1d4ed8; }
+    .btn-success { background:#16a34a; color:#fff; }
+    .btn-success:hover { background:#15803d; }
+    .btn-danger { background:#dc2626; color:#fff; }
+    .btn-danger:hover { background:#b91c1c; }
+    .btn-sm { font-size:0.72rem; padding:5px 10px; }
+    .crud-table-wrap { border:1px solid #e2e8f0; border-radius:10px; overflow-x:auto; background:#fff; }
+    .crud-table { width:100%; border-collapse:collapse; font-size:0.82rem; }
+    .crud-table th { background:#f1f5f9; padding:10px 12px; text-align:left; font-weight:600; color:#475569; border-bottom:1px solid #e2e8f0; white-space:nowrap; }
+    .crud-table td { padding:8px 12px; border-bottom:1px solid #f1f5f9; color:#1e293b; vertical-align:middle; }
+    .crud-table tr:last-child td { border-bottom:none; }
+    .crud-table tr:hover td { background:#f8fafc; }
+    .crud-table .actions { display:flex; gap:6px; white-space:nowrap; }
+
+    /* Capture section */
+    .capture-section {
+      margin-top: 40px;
+      padding: 20px 0;
+      border-top: 2px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .btn-capture {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 24px;
+      cursor: pointer;
+      background: #2563eb;
+      color: #fff;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-capture:hover { background: #1d4ed8; }
+    .btn-capture:active { transform: scale(0.96); }
+    .btn-capture:disabled { background: #94a3b8; cursor: not-allowed; }
+    .capture-status {
+      font-size: 0.82rem;
+      color: #64748b;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="form-header">
+    <div class="breadcrumb">Repayments</div>
+    <h1>Creating Item in Repayments</h1>
+  </div>
+
+  <form autocomplete="off" id="mainForm">
+
+    <!-- Repayment Status -->
+    <div class="form-section">
+      <div class="form-row full">
+        <div class="field-group">
+          <span class="field-label">Repayment Status</span>
+          <input disabled type="text" class="field-input" placeholder="Draft">
+        </div>
+      </div>
+    </div>
+
+    <!-- Repayment Type -->
+    <div class="form-section">
+      <div class="form-row full">
+        <div class="field-group">
+          <span class="field-label">Repayment Type<span class="required">*</span></span>
+          <select class="field-input" required>
+            <option value="" disabled selected>Select an item...</option>
+            <option value="LOAN_REPAYMENT">Loan Repayment</option>
+            <option value="COMMITMENT_FEE_REPAYMENT">Commitment Fee Repayment</option>
+            <option value="RPS_REPAYMENT">RPS Repayment</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXIM Claim Reference No / Loan Facility Account Number -->
+    <div class="form-section">
+      <div class="form-row">
+        <div class="field-group">
+          <span class="field-label">EXIM Claim Reference No<span class="required">*</span></span>
+          <input type="text" class="field-input" placeholder="" maxlength="255" required>
+        </div>
+        <div class="field-group">
+          <span class="field-label">Loan Facility Account Number<span class="required">*</span></span>
+          <input type="text" class="field-input" placeholder="" required>
+        </div>
+      </div>
+    </div>
+
+    <!-- Repayment Amount / Repayment Date -->
+    <div class="form-section">
+      <div class="form-row">
+        <div class="field-group">
+          <span class="field-label">Repayment Amount<span class="required">*</span></span>
+          <input type="number" class="field-input" placeholder="0" min="0" step="0.01" required>
+          <span class="field-hint">Amount cannot be less than 0</span>
+        </div>
+        <div class="field-group">
+          <span class="field-label">Repayment Date<span class="required">*</span></span>
+          <input type="date" class="field-input" required>
+        </div>
+      </div>
+    </div>
+
+    <!-- Repayment Due Date Paid For / Arrears -->
+    <div class="form-section">
+      <div class="form-row">
+        <div class="field-group">
+          <span class="field-label">Repayment Due Date Paid For<span class="required">*</span></span>
+          <input type="date" class="field-input" required>
+          <span class="field-note">For capital and actual interest payments due on the first day after the moratorium ends, enter the due date plus 1 day.</span>
+        </div>
+        <div class="field-group">
+          <span class="field-label">Arrears</span>
+          <input type="number" class="field-input" placeholder="0" min="0" step="0.01" readonly>
+          <span class="field-note">Auto-computed</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Surplus -->
+    <div class="form-section">
+      <div class="form-row">
+        <div class="field-group">
+          <span class="field-label">Surplus</span>
+          <input type="number" class="field-input" placeholder="0" min="0" step="0.01" readonly>
+          <span class="field-note">Auto-computed</span>
+        </div>
+        <div class="field-group"></div>
+      </div>
+    </div>
+
+  </form>
+
+  <!-- Action Buttons -->
+  <div class="capture-section no-print">
+    <button type="button" class="btn-capture" id="saveBtn" onclick="SubmissionManager.saveSubmission()" style="background:#16a34a;">+ Save Submission</button>
+    <button type="button" class="btn-capture" onclick="SubmissionManager.newSubmission()" style="background:#6366f1;">New Submission</button>
+    <button type="button" class="btn-capture" onclick="SubmissionManager.downloadWord()" style="background:#2563eb;">⬇ Download Word (<span id="submissionCount">0</span>)</button>
+    <button type="button" class="btn-capture" id="captureBtn" onclick="captureForm()" disabled>Print Form as Image</button>
+    <span class="capture-status" id="captureStatus"></span>
+  </div>
+
+  <!-- Saved Submissions -->
+  <div class="related-section no-print" style="margin-top:24px;">
+    <div class="related-header">
+      <span class="section-title">Saved Submissions</span>
+    </div>
+    <div class="crud-table-wrap" id="submissionsPanel"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  <script src="export-word.js"></script>
+  <script>
+    // ── Screen Capture ──────────────────────────────────
+    function captureForm() {
+      const btn = document.getElementById('captureBtn');
+      const status = document.getElementById('captureStatus');
+      btn.disabled = true;
+      status.textContent = 'Generating image...';
+
+      const body = document.body;
+      const origPadding = body.style.padding;
+      body.style.padding = '40px';
+
+      const captureSection = document.querySelector('.capture-section');
+      captureSection.style.display = 'none';
+
+      html2canvas(body, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: '#ffffff',
+        scrollY: -window.scrollY,
+        width: body.scrollWidth,
+        height: body.scrollHeight
+      }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'Repayment-DataSheet-' + new Date().toISOString().slice(0,10) + '.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        status.textContent = 'Image downloaded!';
+        btn.disabled = false;
+        setTimeout(() => { status.textContent = ''; }, 3000);
+      }).catch(err => {
+        status.textContent = 'Error: ' + err.message;
+        btn.disabled = false;
+      }).finally(() => {
+        body.style.padding = origPadding;
+        captureSection.style.display = '';
+      });
+    }
+
+    // ── Capture button validation ────────────────────────
+    function checkCaptureReady() {
+      const form = document.getElementById('mainForm');
+      const allRequiredFilled = form.checkValidity();
+      document.getElementById('captureBtn').disabled = !allRequiredFilled;
+    }
+
+    document.getElementById('mainForm').addEventListener('input', checkCaptureReady);
+    document.getElementById('mainForm').addEventListener('change', checkCaptureReady);
+
+    checkCaptureReady();
+
+    // ── Submission Manager ──────────────────────────────
+    SubmissionManager.init('repayments', 'repayments.html', 'Repayments Data Sheet', 'Repayment-DataSheet');
+  </script>
+
+</body>
+</html>

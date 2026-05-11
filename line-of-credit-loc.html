@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Line of Credit (LOC) – Data Entry Template</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f8f9fc;
+      color: #1e293b;
+      padding: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    @media print {
+      body { padding: 20px; background: #fff; }
+      .no-print { display: none; }
+      .btn { display: none; }
+    }
+
+    /* Header */
+    .form-header {
+      margin-bottom: 32px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    .form-header .breadcrumb {
+      font-size: 0.75rem;
+      color: #2563eb;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-bottom: 4px;
+    }
+    .form-header h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1e293b;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    /* Form layout */
+    .form-section {
+      margin-bottom: 24px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    .form-row.full {
+      grid-template-columns: 1fr;
+    }
+
+    /* Field group */
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .field-group.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .field-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #1e293b;
+    }
+    .field-label .required {
+      color: #dc2626;
+      margin-left: 2px;
+    }
+
+    .field-input {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 0.88rem;
+      font-family: 'Inter', sans-serif;
+      color: #1e293b;
+      background: #fff;
+      min-height: 44px;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    .field-input:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    .field-input::placeholder {
+      color: #94a3b8;
+    }
+
+    select.field-input {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2364748b' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+
+    /* Checkbox field */
+    .checkbox-field {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px 14px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #f8fafc;
+    }
+    .checkbox-field input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      border: 2px solid #cbd5e1;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .checkbox-field label {
+      font-size: 0.88rem;
+      color: #64748b;
+      cursor: pointer;
+    }
+
+    /* Suffix inside input */
+    .input-with-suffix {
+      position: relative;
+    }
+    .input-with-suffix .field-input {
+      padding-right: 60px;
+    }
+    .input-suffix {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.82rem;
+      color: #94a3b8;
+      pointer-events: none;
+    }
+
+    /* Separator */
+    .separator {
+      border: none;
+      border-top: 1px solid #e2e8f0;
+      margin: 32px 0;
+    }
+
+    /* ── CRUD TABLE ─────────────────────────────── */
+    .related-section {
+      margin-top: 32px;
+    }
+    .related-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .related-header .section-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn:active { transform: scale(0.96); }
+    .btn-primary {
+      background: #2563eb;
+      color: #fff;
+    }
+    .btn-primary:hover { background: #1d4ed8; }
+    .btn-success {
+      background: #16a34a;
+      color: #fff;
+    }
+    .btn-success:hover { background: #15803d; }
+    .btn-danger {
+      background: #dc2626;
+      color: #fff;
+    }
+    .btn-danger:hover { background: #b91c1c; }
+    .btn-ghost {
+      background: transparent;
+      color: #64748b;
+      border: 1px solid #e2e8f0;
+    }
+    .btn-ghost:hover { background: #f1f5f9; }
+    .btn-sm {
+      font-size: 0.72rem;
+      padding: 5px 10px;
+    }
+
+    .crud-table-wrap {
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      overflow-x: auto;
+      background: #fff;
+    }
+    .crud-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      min-width: 1100px;
+    }
+    .crud-table th {
+      background: #f1f5f9;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+      color: #475569;
+      border-bottom: 1px solid #e2e8f0;
+      white-space: nowrap;
+    }
+    .crud-table td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #1e293b;
+      vertical-align: middle;
+    }
+    .crud-table tr:last-child td { border-bottom: none; }
+    .crud-table tr:hover td { background: #f8fafc; }
+    .crud-table .actions {
+      display: flex;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .crud-table input {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 5px;
+      padding: 6px 8px;
+      width: 100%;
+      min-width: 80px;
+      background: #fff;
+      color: #1e293b;
+    }
+    .crud-table input:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 2px rgba(37,99,235,0.1);
+    }
+    .empty-row td {
+      text-align: center;
+      color: #94a3b8;
+      padding: 24px 12px;
+    }
+
+    /* Print helper text */
+    .print-info {
+      margin-top: 40px;
+      padding: 16px;
+      background: #f1f5f9;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: #64748b;
+      border-left: 3px solid #2563eb;
+    }
+    .print-info strong {
+      color: #1e293b;
+    }
+    input:disabled, select:disabled, input[readonly], select[readonly] {
+      background-color: #e2e0f080;
+      cursor: not-allowed;
+    }
+    .field-hint {
+      font-size: 0.72rem;
+      color: #2563eb;
+      font-style: italic;
+      margin-top: 2px;
+    }
+
+    .capture-section {
+      margin-top: 40px;
+      padding: 20px 0;
+      border-top: 2px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .btn-capture {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 24px;
+      cursor: pointer;
+      background: #2563eb;
+      color: #fff;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-capture:hover { background: #1d4ed8; }
+    .btn-capture:active { transform: scale(0.96); }
+    .btn-capture:disabled { background: #94a3b8; cursor: not-allowed; }
+    .capture-status {
+      font-size: 0.82rem;
+      color: #64748b;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="form-header">
+    <div class="breadcrumb">Line of Credit (LOC)</div>
+    <h1>Creating Item in Line of Credit (LOC)</h1>
+  </div>
+
+  <form autocomplete="off">
+
+    <!-- LOC Status -->
+    <div class="form-section">
+      <div class="form-row full">
+        <div class="field-group">
+          <span class="field-label">LOC Status</span>
+          <input disabled type="text" class="field-input" placeholder="Draft">
+        </div>
+      </div>
+    </div>
+
+    <!-- Financial Institution -->
+    <div class="form-section">
+      <div class="form-row full">
+        <div class="field-group">
+          <span class="field-label">Financial Institution<span class="required">*</span></span>
+          <input type="text" class="field-input" placeholder="e.g. SBMIDC" required>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lending Agency -->
+    <div class="form-section">
+      <div class="form-row full">
+        <div class="field-group">
+          <span class="field-label">Lending Agency<span class="required">*</span></span>
+          <input type="text" class="field-input" placeholder="" required>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOC Type / LOC Reference -->
+    <div class="form-section">
+      <div class="form-row">
+        <div class="field-group">
+          <span class="field-label">LOC Type<span class="required">*</span></span>
+          <select class="field-input" required>
+            <option value="" disabled selected>Select a type...</option>
+            <option value="type_1">LOC Type 1</option>
+            <option value="type_2">LOC Type 2</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <span class="field-label">LOC Reference<span class="required">*</span></span>
+          <input type="text" class="field-input" placeholder="" maxlength="255" required>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOC Amount / Currency -->
+    <div class="form-section">
+      <div class="form-row">
+        <div class="field-group">
+          <span class="field-label">LOC Amount<span class="required">*</span></span>
+          <input type="number" class="field-input" placeholder="0" min="0" step="0.01" required>
+          
+        </div>
+        <div class="field-group">
+          <span class="field-label">Currency</span>
+          <input type="text" class="field-input" placeholder="">
+        </div>
+      </div>
+    </div>
+
+    <!-- Date Of Agreement / Repayment Period -->
+    <div class="form-section">
+      <div class="form-row">
+        <div class="field-group">
+          <span class="field-label">Date Of Agreement<span class="required">*</span></span>
+          <input type="date" class="field-input" required>
+        </div>
+        <div class="field-group">
+          <span class="field-label">Repayment Period<span class="required">*</span></span>
+          <div class="input-with-suffix">
+            <input type="number" class="field-input" placeholder="0" min="0" step="0.01" required>
+            <span class="input-suffix">Years</span>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- Interest Moratorium Period / Capital Moratorium Period -->
+    <div class="form-section">
+      <div class="form-row">
+        <div class="field-group">
+          <span class="field-label">Interest Moratorium Period<span class="required">*</span></span>
+          <div class="input-with-suffix">
+            <input type="number" class="field-input" placeholder="0" min="0" step="0.01" required>
+            <span class="input-suffix">Years</span>
+          </div>
+          
+        </div>
+        <div class="field-group">
+          <span class="field-label">Capital Moratorium Period<span class="required">*</span></span>
+          <div class="input-with-suffix">
+            <input type="number" class="field-input" placeholder="0" min="0" step="0.01" required>
+            <span class="input-suffix">Years</span>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- Dividend Rate / Capitalized Dividend Rate -->
+    <div class="form-section">
+      <div class="form-row">
+        <div class="field-group">
+          <span class="field-label">Dividend Rate<span class="required">*</span></span>
+          <div class="input-with-suffix">
+            <input type="number" class="field-input" placeholder="0" min="0" max="99.99" step="0.01" required>
+            <span class="input-suffix">%</span>
+          </div>
+          
+        </div>
+        <div class="field-group">
+          <span class="field-label">Capitalized Dividend Rate<span class="required">*</span></span>
+          <div class="input-with-suffix">
+            <input type="number" class="field-input" placeholder="0" min="0" max="99.99" step="0.01" required>
+            <span class="input-suffix">%</span>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- Penalty Rate / Commitment Fee Rate -->
+    <div class="form-section">
+      <div class="form-row">
+        <div class="field-group">
+          <span class="field-label">Penalty Rate<span class="required">*</span></span>
+          <div class="input-with-suffix">
+            <input type="number" class="field-input" placeholder="0" min="0" max="99.99" step="0.01" required>
+            <span class="input-suffix">%</span>
+          </div>
+          
+        </div>
+        <div class="field-group">
+          <span class="field-label">Commitment Fee Rate<span class="required">*</span></span>
+          <div class="input-with-suffix">
+            <input type="number" class="field-input" placeholder="0" min="0" max="99.99" step="0.01" required>
+            <span class="input-suffix">%</span>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- Capitalization / Year Factor -->
+    <div class="form-section">
+      <div class="form-row">
+        <div class="field-group">
+          <span class="field-label">Capitalization</span>
+          <div class="checkbox-field">
+            <input type="checkbox" id="capitalization">
+            <label for="capitalization">Yes</label>
+          </div>
+        </div>
+        <div class="field-group">
+          <span class="field-label">Year Factor<span class="required">*</span></span>
+          <input type="number" class="field-input" placeholder="" min="0" max="999" required>
+          <span class="field-hint">Number cannot be less than 0 or more than 999</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment Frequency / First Disbursement Date -->
+    <div class="form-section">
+      <div class="form-row">
+        <div class="field-group">
+          <span class="field-label">Payment Frequency<span class="required">*</span></span>
+          <select class="field-input" required>
+            <option value="" disabled selected>Select frequency...</option>
+            <option value="SEMI_YEARLY">Semi Yearly</option>
+            <option value="YEARLY">Yearly</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <span class="field-label">First Disbursement Date</span>
+          <input type="text" class="field-input" placeholder="dd/mm/yyyy">
+        </div>
+      </div>
+    </div>
+
+    <!-- End Of Moratorium -->
+    <div class="form-section">
+      <div class="form-row">
+        <div class="field-group">
+          <span class="field-label">End Of Moratorium</span>
+          <input type="text" class="field-input" placeholder="">
+        </div>
+        <div class="field-group"></div>
+      </div>
+    </div>
+
+    <hr class="separator">
+
+    <!-- Interest Rate / Capitalized Interest Rate -->
+    <div class="form-section">
+      <div class="form-row">
+        <div class="field-group">
+          <span class="field-label">Interest Rate<span class="required">*</span></span>
+          <div class="input-with-suffix">
+            <input type="number" class="field-input" placeholder="0" min="0" max="99.99" step="0.01" required>
+            <span class="input-suffix">%</span>
+          </div>
+          
+        </div>
+        <div class="field-group">
+          <span class="field-label">Capitalized Interest Rate<span class="required">*</span></span>
+          <div class="input-with-suffix">
+            <input type="number" class="field-input" placeholder="0" min="0" max="99.99" step="0.01" required>
+            <span class="input-suffix">%</span>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <hr class="separator">
+
+    <!-- LF Accounts CRUD Section -->
+    <div class="related-section">
+      <div class="related-header">
+        <span class="section-title">LF Accounts</span>
+        <button type="button" class="btn btn-primary no-print" onclick="addRow()">+ Add New</button>
+      </div>
+      <div class="crud-table-wrap">
+        <table class="crud-table" id="lfTable">
+          <thead>
+            <tr>
+              <th>Project Name</th>
+              <th>Loan Amount</th>
+              <th class="no-print">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="lfTableBody">
+            <tr class="empty-row" id="emptyRow">
+              <td colspan="10">No items – click "Add New" to add an LF Account</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Line of Credit (LOC) Details CRUD Section -->
+    <div class="related-section">
+      <div class="related-header">
+        <span class="section-title">Line of Credit (LOC) Details</span>
+        <button type="button" class="btn btn-primary no-print" onclick="addLocDetailRow()">+ Add New</button>
+      </div>
+      <div class="crud-table-wrap">
+        <table class="crud-table" id="locDetailsTable">
+          <thead>
+            <tr>
+              <th>Next Due Date on LOC</th>
+              <th>Revised Loan Amount</th>
+              <th>Closing Date</th>
+              <th class="no-print">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="locDetailsTableBody">
+            <tr class="empty-row">
+              <td colspan="4">No items – click "Add New" to add a LOC Detail</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </form>
+
+  <!-- Action Buttons -->
+  <div class="capture-section no-print">
+    <button type="button" class="btn-capture" id="saveBtn" onclick="SubmissionManager.saveSubmission()" style="background:#16a34a;">+ Save Submission</button>
+    <button type="button" class="btn-capture" onclick="SubmissionManager.newSubmission()" style="background:#6366f1;">New Submission</button>
+    <button type="button" class="btn-capture" onclick="SubmissionManager.downloadWord()" style="background:#2563eb;">⬇ Download Word (<span id="submissionCount">0</span>)</button>
+    <button type="button" class="btn-capture" id="captureBtn" onclick="captureForm()" disabled> Print form as image</button>
+    <span class="capture-status" id="captureStatus"></span>
+  </div>
+
+  <!-- Saved Submissions -->
+  <div class="related-section no-print" style="margin-top:24px;">
+    <div class="related-header">
+      <span class="section-title">Saved Submissions</span>
+    </div>
+    <div class="crud-table-wrap" id="submissionsPanel"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  <script src="export-word.js"></script>
+  <script>
+    // ── Screen Capture ──────────────────────────────────
+    function captureForm() {
+      const btn = document.getElementById('captureBtn');
+      const status = document.getElementById('captureStatus');
+      btn.disabled = true;
+      status.textContent = 'Generating image...';
+
+      // Temporarily add padding to body for the capture
+      const body = document.body;
+      const origPadding = body.style.padding;
+      body.style.padding = '40px';
+
+      // Hide the capture button section during capture
+      const captureSection = document.querySelector('.capture-section');
+      captureSection.style.display = 'none';
+
+      html2canvas(body, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: '#ffffff',
+        scrollY: -window.scrollY,
+        width: body.scrollWidth,
+        height: body.scrollHeight
+      }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'LOC-DataSheet-' + new Date().toISOString().slice(0,10) + '.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        status.textContent = 'Image downloaded!';
+        btn.disabled = false;
+        setTimeout(() => { status.textContent = ''; }, 3000);
+      }).catch(err => {
+        status.textContent = 'Error: ' + err.message;
+        btn.disabled = false;
+      }).finally(() => {
+        body.style.padding = origPadding;
+        captureSection.style.display = '';
+      });
+    }
+
+    // ── LF Accounts CRUD ────────────────────────────────
+    const columns = [
+      'project_name',
+      'loan_amount'
+    ];
+
+    const placeholders = {
+      project_name: '',
+      loan_amount: '0',
+    };
+
+    let rows = [];
+    let editingIndex = null;
+
+    function renderTable() {
+      const tbody = document.getElementById('lfTableBody');
+      tbody.innerHTML = '';
+
+      if (rows.length === 0 && editingIndex === null) {
+        tbody.innerHTML = '<tr class="empty-row"><td colspan="3">No items – click "Add New" to add an LF Account</td></tr>';
+        return;
+      }
+
+      rows.forEach((row, idx) => {
+        const tr = document.createElement('tr');
+
+        if (editingIndex === idx) {
+          // Inline editing mode
+          columns.forEach(col => {
+            const td = document.createElement('td');
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = row[col] || '';
+            input.placeholder = placeholders[col] || '';
+            input.dataset.col = col;
+            input.dataset.idx = idx;
+            td.appendChild(input);
+            tr.appendChild(td);
+          });
+          // Actions
+          const actionTd = document.createElement('td');
+          actionTd.innerHTML = `
+            <div class="actions">
+              <button type="button" class="btn btn-success btn-sm" onclick="saveRow(${idx})">Save</button>
+              <button type="button" class="btn btn-ghost btn-sm" onclick="cancelEdit(${idx})">Cancel</button>
+            </div>`;
+          tr.appendChild(actionTd);
+        } else {
+          // Display mode
+          columns.forEach(col => {
+            const td = document.createElement('td');
+            td.textContent = row[col] || '\u2014';
+            tr.appendChild(td);
+          });
+          // Actions
+          const actionTd = document.createElement('td');
+          actionTd.innerHTML = `
+            <div class="actions">
+              <button type="button" class="btn btn-ghost btn-sm" onclick="editRow(${idx})">Edit</button>
+              <button type="button" class="btn btn-danger btn-sm" onclick="deleteRow(${idx})">Delete</button>
+            </div>`;
+          tr.appendChild(actionTd);
+        }
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    function addRow() {
+      // Create a new empty row and immediately put it in edit mode
+      const newRow = {};
+      columns.forEach(col => newRow[col] = '');
+      rows.push(newRow);
+      editingIndex = rows.length - 1;
+      renderTable();
+      // Focus first input
+      const firstInput = document.querySelector('#lfTableBody tr:last-child input');
+      if (firstInput) firstInput.focus();
+    }
+
+    function editRow(idx) {
+      editingIndex = idx;
+      renderTable();
+      const firstInput = document.querySelector(`#lfTableBody tr:nth-child(${idx + 1}) input`);
+      if (firstInput) firstInput.focus();
+    }
+
+    function saveRow(idx) {
+      const inputs = document.querySelectorAll(`#lfTableBody tr:nth-child(${idx + 1}) input`);
+      inputs.forEach(input => {
+        rows[idx][input.dataset.col] = input.value.trim();
+      });
+      editingIndex = null;
+      renderTable();
+      checkCaptureReady();
+    }
+
+    function cancelEdit(idx) {
+      // If row is completely empty (just added), remove it
+      const row = rows[idx];
+      const isEmpty = columns.every(col => !row[col]);
+      if (isEmpty) {
+        rows.splice(idx, 1);
+      }
+      editingIndex = null;
+      renderTable();
+      checkCaptureReady();
+    }
+
+    function deleteRow(idx) {
+      if (confirm('Remove this LF Account entry?')) {
+        rows.splice(idx, 1);
+        editingIndex = null;
+        renderTable();
+        checkCaptureReady();
+      }
+    }
+
+    // Initial render
+    renderTable();
+
+    // ── LOC Details CRUD ──────────────────────────────
+    const locDetailColumns = [
+      'next_due_date_on_loc',
+      'revised_loan_amount',
+      'closing_date'
+    ];
+
+    const locDetailPlaceholders = {
+      next_due_date_on_loc: 'e.g. 27 February',
+      revised_loan_amount: '0',
+      closing_date: 'dd/mm/yyyy'
+    };
+
+    const locDetailValidation = {
+      next_due_date_on_loc: {
+        pattern: '^(?:(0[1-9]|[12][0-9]|3[01]) (January|March|May|July|August|October|December)|(0[1-9]|[12][0-9]|30) (April|June|September|November)|(0[1-9]|1[0-9]|2[0-8]) February)$',
+        title: 'Format: DD Month (e.g. 27 February)',
+        type: 'text'
+      },
+      revised_loan_amount: {
+        min: '0',
+        step: '0.01',
+        title: 'Amount cannot be less than 0',
+        type: 'number'
+      },
+      closing_date: {
+        type: 'date',
+        title: 'Select a date'
+      }
+    };
+
+    let locDetailRows = [];
+    let locDetailEditingIndex = null;
+
+    function renderLocDetailsTable() {
+      const tbody = document.getElementById('locDetailsTableBody');
+      tbody.innerHTML = '';
+
+      if (locDetailRows.length === 0 && locDetailEditingIndex === null) {
+        tbody.innerHTML = '<tr class="empty-row"><td colspan="4">No items – click "Add New" to add a LOC Detail</td></tr>';
+        return;
+      }
+
+      locDetailRows.forEach((row, idx) => {
+        const tr = document.createElement('tr');
+
+        if (locDetailEditingIndex === idx) {
+          locDetailColumns.forEach(col => {
+            const td = document.createElement('td');
+            const input = document.createElement('input');
+            const vld = locDetailValidation[col] || {};
+            input.type = vld.type || 'text';
+            input.value = row[col] || '';
+            input.placeholder = locDetailPlaceholders[col] || '';
+            if (vld.pattern) input.pattern = vld.pattern;
+            if (vld.min !== undefined) input.min = vld.min;
+            if (vld.step) input.step = vld.step;
+            if (vld.title) input.title = vld.title;
+            input.dataset.col = col;
+            input.dataset.idx = idx;
+            td.appendChild(input);
+            tr.appendChild(td);
+          });
+          const actionTd = document.createElement('td');
+          actionTd.innerHTML = `
+            <div class="actions">
+              <button type="button" class="btn btn-success btn-sm" onclick="saveLocDetailRow(${idx})">Save</button>
+              <button type="button" class="btn btn-ghost btn-sm" onclick="cancelLocDetailEdit(${idx})">Cancel</button>
+            </div>`;
+          tr.appendChild(actionTd);
+        } else {
+          locDetailColumns.forEach(col => {
+            const td = document.createElement('td');
+            td.textContent = row[col] || '\u2014';
+            tr.appendChild(td);
+          });
+          const actionTd = document.createElement('td');
+          actionTd.innerHTML = `
+            <div class="actions">
+              <button type="button" class="btn btn-ghost btn-sm" onclick="editLocDetailRow(${idx})">Edit</button>
+              <button type="button" class="btn btn-danger btn-sm" onclick="deleteLocDetailRow(${idx})">Delete</button>
+            </div>`;
+          tr.appendChild(actionTd);
+        }
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    function addLocDetailRow() {
+      const newRow = {};
+      locDetailColumns.forEach(col => newRow[col] = '');
+      locDetailRows.push(newRow);
+      locDetailEditingIndex = locDetailRows.length - 1;
+      renderLocDetailsTable();
+      const firstInput = document.querySelector('#locDetailsTableBody tr:last-child input');
+      if (firstInput) firstInput.focus();
+    }
+
+    function editLocDetailRow(idx) {
+      locDetailEditingIndex = idx;
+      renderLocDetailsTable();
+      const firstInput = document.querySelector(`#locDetailsTableBody tr:nth-child(${idx + 1}) input`);
+      if (firstInput) firstInput.focus();
+    }
+
+    function saveLocDetailRow(idx) {
+      const inputs = document.querySelectorAll(`#locDetailsTableBody tr:nth-child(${idx + 1}) input`);
+      inputs.forEach(input => {
+        locDetailRows[idx][input.dataset.col] = input.value.trim();
+      });
+      locDetailEditingIndex = null;
+      renderLocDetailsTable();
+      checkCaptureReady();
+    }
+
+    function cancelLocDetailEdit(idx) {
+      const row = locDetailRows[idx];
+      const isEmpty = locDetailColumns.every(col => !row[col]);
+      if (isEmpty) {
+        locDetailRows.splice(idx, 1);
+      }
+      locDetailEditingIndex = null;
+      renderLocDetailsTable();
+      checkCaptureReady();
+    }
+
+    function deleteLocDetailRow(idx) {
+      if (confirm('Remove this LOC Detail entry?')) {
+        locDetailRows.splice(idx, 1);
+        locDetailEditingIndex = null;
+        renderLocDetailsTable();
+        checkCaptureReady();
+      }
+    }
+
+    renderLocDetailsTable();
+
+    // ── Capture button validation ────────────────────────
+    function checkCaptureReady() {
+      const form = document.querySelector('form');
+      const allRequiredFilled = form.checkValidity();
+      const hasLfRow = rows.length > 0 && rows.some(r => columns.some(c => r[c]));
+      const hasLocDetailRow = locDetailRows.length > 0 && locDetailRows.some(r => locDetailColumns.some(c => r[c]));
+      document.getElementById('captureBtn').disabled = !(allRequiredFilled && hasLfRow && hasLocDetailRow);
+    }
+
+    // Listen for input changes on the form
+    document.querySelector('form').addEventListener('input', checkCaptureReady);
+    document.querySelector('form').addEventListener('change', checkCaptureReady);
+
+    // Initial check
+    checkCaptureReady();
+
+    // ── CRUD table loader for SubmissionManager ─────────
+    window._loadCrudTablesFromData = function(crudTablesData) {
+      // Reset LF Accounts
+      rows = [];
+      editingIndex = null;
+
+      const lfData = crudTablesData.find(t => t.title === 'LF Accounts');
+      if (lfData && lfData.rows) {
+        lfData.rows.forEach(row => {
+          const obj = {};
+          columns.forEach((col, i) => {
+            obj[col] = row[i] || '';
+          });
+          rows.push(obj);
+        });
+      }
+      renderTable();
+
+      // Reset LOC Details
+      locDetailRows = [];
+      locDetailEditingIndex = null;
+
+      const locData = crudTablesData.find(t => t.title === 'Line of Credit (LOC) Details');
+      if (locData && locData.rows) {
+        locData.rows.forEach(row => {
+          const obj = {};
+          locDetailColumns.forEach((col, i) => {
+            obj[col] = row[i] || '';
+          });
+          locDetailRows.push(obj);
+        });
+      }
+      renderLocDetailsTable();
+
+      checkCaptureReady();
+    };
+
+    // ── Submission Manager ──────────────────────────────
+    SubmissionManager.init('line-of-credit', 'line-of-credit-loc.html', 'Line of Credit (LOC) Data Sheet', 'LOC-DataSheet');
+  </script>
+
+</body>
+</html>
