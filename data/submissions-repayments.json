@@ -1,50 +1,5 @@
 [
   {
-    "id": "mp0wml3m8txz",
-    "savedAt": "2026-05-11T07:52:50.002Z",
-    "data": {
-      "fields": [
-        {
-          "label": "Repayment Status",
-          "value": "Draft"
-        },
-        {
-          "label": "Repayment Type",
-          "value": ""
-        },
-        {
-          "label": "EXIM Claim Reference No",
-          "value": ""
-        },
-        {
-          "label": "Loan Facility Account Number",
-          "value": ""
-        },
-        {
-          "label": "Repayment Amount",
-          "value": ""
-        },
-        {
-          "label": "Repayment Date",
-          "value": ""
-        },
-        {
-          "label": "Repayment Due Date Paid For",
-          "value": ""
-        },
-        {
-          "label": "Arrears",
-          "value": ""
-        },
-        {
-          "label": "Surplus",
-          "value": ""
-        }
-      ],
-      "crudTables": []
-    }
-  },
-  {
     "id": "mp0wpcssl8ew",
     "savedAt": "2026-05-11T07:54:59.212Z",
     "data": {
