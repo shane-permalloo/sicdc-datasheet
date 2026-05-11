@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SICDC – Data Sheet Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f8f9fc;
+      color: #1e293b;
+      padding: 40px 40px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* ── Header ─────────────────────────────────────────── */
+    .site-header {
+      margin-bottom: 48px;
+      padding-bottom: 24px;
+      border-bottom: 2px solid #e2e8f0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .site-header .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .site-header .brand-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #2563eb;
+      text-transform: uppercase;
+    }
+    .site-header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1e293b;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      line-height: 1.2;
+    }
+    .site-header .subtitle {
+      font-size: 0.88rem;
+      color: #64748b;
+      margin-top: 4px;
+    }
+
+    /* ── Form cards grid ────────────────────────────────── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+
+    .form-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 24px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s;
+      cursor: pointer;
+    }
+    .form-card:hover {
+      box-shadow: 0 4px 20px rgba(37, 99, 235, 0.1);
+      border-color: #2563eb;
+      transform: translateY(-2px);
+    }
+    .form-card:active { transform: translateY(0); }
+
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .card-icon.blue   { background: #dbeafe; }
+    .card-icon.green  { background: #dcfce7; }
+    .card-icon.amber  { background: #fef3c7; }
+    .card-icon.purple { background: #ede9fe; }
+
+    .card-body { display: flex; flex-direction: column; gap: 4px; }
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1e293b;
+    }
+    .card-desc {
+      font-size: 0.8rem;
+      color: #64748b;
+      line-height: 1.5;
+    }
+
+    .card-arrow {
+      margin-top: auto;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #2563eb;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .card-arrow::after { content: '→'; }
+
+    /* ── Instructions ───────────────────────────────────── */
+    .section-heading {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #94a3b8;
+      margin-bottom: 16px;
+    }
+
+    .guide-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 20px;
+    }
+
+    .guide-card h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .step {
+      display: flex;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid #f8f9fc;
+      align-items: flex-start;
+    }
+    .step:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #2563eb;
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .step-content { flex: 1; }
+    .step-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 3px;
+    }
+    .step-detail {
+      font-size: 0.8rem;
+      color: #64748b;
+      line-height: 1.55;
+    }
+    .step-detail code {
+      background: #f1f5f9;
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-size: 0.78rem;
+      color: #2563eb;
+      font-family: 'Courier New', monospace;
+    }
+    .step-detail strong { color: #1e293b; }
+
+    /* Button pills inside instructions */
+    .pill {
+      display: inline-block;
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      vertical-align: middle;
+    }
+    .pill-green  { background: #dcfce7; color: #15803d; }
+    .pill-purple { background: #ede9fe; color: #6d28d9; }
+    .pill-blue   { background: #dbeafe; color: #1d4ed8; }
+    .pill-amber  { background: #fef3c7; color: #92400e; }
+    .pill-red    { background: #fee2e2; color: #b91c1c; }
+
+    /* ── Notes / callouts ───────────────────────────────── */
+    .callout {
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 0.82rem;
+      line-height: 1.55;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .callout-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+    .callout.info  { background: #eff6ff; border-left: 3px solid #2563eb; color: #1e40af; }
+    .callout.warn  { background: #fef3c7; border-left: 3px solid #f59e0b; color: #78350f; }
+
+    .notes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    @media (max-width: 640px) {
+      .notes-grid { grid-template-columns: 1fr; }
+      body { padding: 20px 20px 60px; }
+      .site-header { margin-bottom: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-label">SICDC</span>
+      <h1>Data Sheet Portal</h1>
+      <p class="subtitle">Select a form below to create or review data entries.</p>
+    </div>
+  </header>
+
+  <!-- Form navigation cards -->
+  <p class="section-heading">Data Entry Forms</p>
+  <div class="cards-grid">
+
+    <a class="form-card" href="line-of-credit-loc.html">
+      <div class="card-icon purple">🏦</div>
+      <div class="card-body">
+        <div class="card-title">Line of Credit (LOC)</div>
+        <div class="card-desc">Record LOC agreements, rates, moratorium periods and related account details.</div>
+      </div>
+      <span class="card-arrow">Open form</span>
+    </a>
+
+    <a class="form-card" href="loan-facility-accounts.html">
+      <div class="card-icon blue">📋</div>
+      <div class="card-body">
+        <div class="card-title">Loan Facility Accounts</div>
+        <div class="card-desc">Create and manage loan facility account records linked to a LOC reference.</div>
+      </div>
+      <span class="card-arrow">Open form</span>
+    </a>
+
+    <a class="form-card" href="disbursements.html">
+      <div class="card-icon green">💸</div>
+      <div class="card-body">
+        <div class="card-title">Disbursements</div>
+        <div class="card-desc">Log disbursement transactions with project reference, dates and RPS details.</div>
+      </div>
+      <span class="card-arrow">Open form</span>
+    </a>
+
+    <a class="form-card" href="repayments.html">
+      <div class="card-icon amber">🔄</div>
+      <div class="card-body">
+        <div class="card-title">Repayments</div>
+        <div class="card-desc">Record loan, commitment fee and RPS repayments with arrears and surplus tracking.</div>
+      </div>
+      <span class="card-arrow">Open form</span>
+    </a>
+
+  </div>
+
+  <!-- Quick-start guide -->
+  <p class="section-heading">Quick-Start Guide</p>
+
+  <div class="guide-card">
+    <h2>How to submit and manage data entries</h2>
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Open the relevant form</div>
+          <div class="step-detail">
+            Click any card above. Forms load the latest saved submissions automatically from GitHub
+            — no login required.
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Fill in the fields</div>
+          <div class="step-detail">
+            Fields marked <strong style="color:#dc2626;">*</strong> are required.
+            Some fields (e.g. <em>Date Of Call For RPS</em>, <em>RPS Amount</em>) are
+            <strong>auto-computed</strong> — they fill in automatically once you enter
+            the source field.
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Save the submission</div>
+          <div class="step-detail">
+            Click <span class="pill pill-green">+ Save Submission</span>. The data is committed
+            directly to the GitHub repository and immediately visible to all users who refresh
+            their page. A confirmation alert will appear once saved.
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">Start a new entry</div>
+          <div class="step-detail">
+            Click <span class="pill pill-purple">New Submission</span> to clear the form
+            and begin a fresh entry. Your previous submission remains saved.
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">Edit a saved entry</div>
+          <div class="step-detail">
+            In the <strong>Saved Submissions</strong> table at the bottom of the form,
+            click <span class="pill pill-blue" style="border:1px solid #e2e8f0;">Edit</span>
+            next to any row. The form re-populates with that entry's data.
+            Make your changes, then click
+            <span class="pill pill-amber">✓ Update Submission</span> to save.
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-content">
+          <div class="step-title">Delete an entry</div>
+          <div class="step-detail">
+            Click <span class="pill pill-red">Delete</span> next to any saved submission.
+            You will be asked to confirm. Deletion is permanent and committed to GitHub.
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">7</div>
+        <div class="step-content">
+          <div class="step-title">Download the Word report</div>
+          <div class="step-detail">
+            Click <span class="pill pill-blue">⬇ Download Word</span> to export
+            <strong>all saved submissions</strong> for that form into a single
+            <code>.docx</code> file. Each submission appears as a labelled block with an
+            edit link. The file is always named the same (e.g.
+            <code>Disbursement-DataSheet.docx</code>) so it overwrites the previous version
+            when saved to the same folder.
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">8</div>
+        <div class="step-content">
+          <div class="step-title">Refresh to see other users' changes</div>
+          <div class="step-detail">
+            Submissions are loaded once on page open. Click
+            <span class="pill pill-blue" style="border:1px solid #e2e8f0;">↻ Refresh</span>
+            in the Saved Submissions panel header to pull the latest data from GitHub
+            without reloading the page.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Notes -->
+  <div class="notes-grid">
+    <div class="callout info">
+      <span class="callout-icon">ℹ️</span>
+      <div>
+        <strong>Supported browsers:</strong> Google Chrome and Microsoft Edge.
+        Other browsers may not support all features (Word export requires a modern browser).
+      </div>
+    </div>
+    <div class="callout warn">
+      <span class="callout-icon">⚠️</span>
+      <div>
+        <strong>After saving</strong>, Netlify redeploys automatically. Allow
+        ~30 seconds before other users will see new submissions on a fresh page load.
+        Use <strong>↻ Refresh</strong> to get changes immediately without waiting for a redeploy.
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
