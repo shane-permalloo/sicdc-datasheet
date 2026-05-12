@@ -279,13 +279,28 @@
       color: #64748b;
     }
   </style>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
 
+  <!-- ── Auth Gate ────────────────────────────────────── -->
+  <div id="authGate" style="position:fixed;inset:0;background:#f8f9fc;z-index:9999;display:flex;align-items:center;justify-content:center;">
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:40px 36px;max-width:360px;width:90%;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
+      <div style="font-size:2rem;margin-bottom:12px;">🔒</div>
+      <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.08em;color:#2563eb;text-transform:uppercase;margin-bottom:4px;">SICDC</div>
+      <h2 style="font-size:1.1rem;font-weight:700;color:#1e293b;margin-bottom:8px;">Data Sheet Portal</h2>
+      <p style="font-size:0.84rem;color:#64748b;margin-bottom:28px;">Sign in to access this form.</p>
+      <button onclick="netlifyIdentity.open()" style="background:#2563eb;color:#fff;border:none;border-radius:8px;padding:12px 0;font-size:0.9rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;width:100%;">Sign In</button>
+    </div>
+  </div>
+
   <!-- Header -->
-  <div class="form-header">
-    <div class="breadcrumb"><a href="index.html" style="color:#2563eb;text-decoration:none;">← Home</a> / Loan Facility Accounts</div>
-    <h1>Creating Item in Loan Facility Accounts</h1>
+  <div class="form-header" style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;">
+    <div>
+      <div class="breadcrumb"><a href="index.html" style="color:#2563eb;text-decoration:none;">← Home</a> / Loan Facility Accounts</div>
+      <h1>Creating Item in Loan Facility Accounts</h1>
+    </div>
+    <button id="signOutBtn" onclick="netlifyIdentity.logout()" style="display:none;flex-shrink:0;background:transparent;border:1px solid #e2e8f0;border-radius:6px;padding:6px 14px;font-size:0.78rem;font-weight:600;font-family:'Inter',sans-serif;color:#64748b;cursor:pointer;" title="Sign out">Sign Out</button>
   </div>
 
   <form autocomplete="off" id="mainForm">
@@ -636,8 +651,27 @@
       checkCaptureReady();
     };
 
-    // ── Submission Manager ──────────────────────────────
-    SubmissionManager.init('loan-facility-accounts', 'loan-facility-accounts.html', 'Loan Facility Accounts Data Sheet', 'LoanFacilityAccounts-DataSheet');
+    // ── Netlify Identity auth ───────────────────────────
+    function _initApp() {
+      SubmissionManager.init('loan-facility-accounts', 'loan-facility-accounts.html', 'Loan Facility Accounts Data Sheet', 'LoanFacilityAccounts-DataSheet');
+    }
+    netlifyIdentity.on('init', user => {
+      if (user) {
+        document.getElementById('authGate').style.display = 'none';
+        document.getElementById('signOutBtn').style.display = '';
+        _initApp();
+      }
+    });
+    netlifyIdentity.on('login', () => {
+      netlifyIdentity.close();
+      document.getElementById('authGate').style.display = 'none';
+      document.getElementById('signOutBtn').style.display = '';
+      _initApp();
+    });
+    netlifyIdentity.on('logout', () => {
+      document.getElementById('authGate').style.display = 'flex';
+      document.getElementById('signOutBtn').style.display = 'none';
+    });
   </script>
 
 </body>

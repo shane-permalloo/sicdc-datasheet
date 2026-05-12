@@ -238,8 +238,20 @@
       .site-header { margin-bottom: 32px; }
     }
   </style>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
+
+  <!-- ── Auth Gate ────────────────────────────────────── -->
+  <div id="authGate" style="position:fixed;inset:0;background:#f8f9fc;z-index:9999;display:flex;align-items:center;justify-content:center;">
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:40px 36px;max-width:360px;width:90%;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
+      <div style="font-size:2rem;margin-bottom:12px;">🔒</div>
+      <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.08em;color:#2563eb;text-transform:uppercase;margin-bottom:4px;">SICDC</div>
+      <h2 style="font-size:1.1rem;font-weight:700;color:#1e293b;margin-bottom:8px;">Data Sheet Portal</h2>
+      <p style="font-size:0.84rem;color:#64748b;margin-bottom:28px;">Sign in to access the portal.</p>
+      <button onclick="netlifyIdentity.open()" style="background:#2563eb;color:#fff;border:none;border-radius:8px;padding:12px 0;font-size:0.9rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;width:100%;">Sign In</button>
+    </div>
+  </div>
 
   <!-- Header -->
   <header class="site-header">
@@ -248,6 +260,7 @@
       <h1>Data Sheet Portal</h1>
       <p class="subtitle">Select a form below to create or review data entries.</p>
     </div>
+    <button id="signOutBtn" onclick="netlifyIdentity.logout()" style="display:none;background:transparent;border:1px solid #e2e8f0;border-radius:6px;padding:6px 14px;font-size:0.78rem;font-weight:600;font-family:'Inter',sans-serif;color:#64748b;cursor:pointer;" title="Sign out">Sign Out</button>
   </header>
 
   <!-- Form navigation cards -->
@@ -304,8 +317,8 @@
         <div class="step-content">
           <div class="step-title">Open the relevant form</div>
           <div class="step-detail">
-            Click any card above. Forms load the latest saved submissions automatically from GitHub
-            — no login required.
+            Click any card above. You must be signed in to access any form. Submissions are loaded
+            automatically from GitHub on page open.
           </div>
         </div>
       </div>
@@ -413,6 +426,24 @@
     </div>
     
   </div>
+
+  <script>
+    netlifyIdentity.on('init', user => {
+      if (user) {
+        document.getElementById('authGate').style.display = 'none';
+        document.getElementById('signOutBtn').style.display = '';
+      }
+    });
+    netlifyIdentity.on('login', () => {
+      netlifyIdentity.close();
+      document.getElementById('authGate').style.display = 'none';
+      document.getElementById('signOutBtn').style.display = '';
+    });
+    netlifyIdentity.on('logout', () => {
+      document.getElementById('authGate').style.display = 'flex';
+      document.getElementById('signOutBtn').style.display = 'none';
+    });
+  </script>
 
 </body>
 </html>

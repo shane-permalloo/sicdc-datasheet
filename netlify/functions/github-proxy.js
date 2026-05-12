@@ -21,7 +21,7 @@ exports.handler = async (event) => {
   const CORS = {
     'Access-Control-Allow-Origin':  '*',
     'Access-Control-Allow-Methods': 'GET, PUT, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Accept'
+    'Access-Control-Allow-Headers': 'Content-Type, Accept, Authorization'
   };
 
   // Handle CORS pre-flight
@@ -32,6 +32,18 @@ exports.handler = async (event) => {
   // Only allow GET and PUT
   if (!['GET', 'PUT'].includes(event.httpMethod)) {
     return { statusCode: 405, headers: CORS, body: JSON.stringify({ message: 'Method not allowed' }) };
+  }
+
+  // ── Netlify Identity auth check ───────────────────────
+  // Netlify automatically validates the Bearer JWT from the Authorization header
+  // and populates event.clientContext.user when the token is valid.
+  const netlifyUser = event.clientContext && event.clientContext.user;
+  if (!netlifyUser) {
+    return {
+      statusCode: 401,
+      headers: { ...CORS, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: 'Authentication required. Please sign in.' })
+    };
   }
 
   // Token must be present in environment

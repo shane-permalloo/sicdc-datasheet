@@ -50,7 +50,12 @@ class SubmissionStore {
   }
 
   get _headers() {
-    return { Accept: 'application/json' };
+    const headers = { Accept: 'application/json' };
+    // Attach Netlify Identity JWT so the serverless proxy can verify the user
+    const user  = window.netlifyIdentity && window.netlifyIdentity.currentUser();
+    const token = user && user.token && user.token.access_token;
+    if (token) headers['Authorization'] = 'Bearer ' + token;
+    return headers;
   }
 
   /** Fetch the file from GitHub (via proxy) and populate the cache. */
