@@ -301,8 +301,7 @@ function _renderSubmissionsPanel(store) {
                 background:#f1f5f9;border-bottom:1px solid #e2e8f0;font-size:0.8rem;
                 border-radius:10px 10px 0 0;">
       <span style="color:#475569;">
-        ⚙ <strong>GitHub</strong>: ${_escapeHtml(repoLabel)}
-        &nbsp;·&nbsp; ${submissions.length} submission${submissions.length !== 1 ? 's' : ''}
+        ${submissions.length} submission${submissions.length !== 1 ? 's' : ''}
       </span>
       <button class="btn btn-ghost btn-sm" onclick="SubmissionManager.refresh()" title="Reload latest data from GitHub">
         ↻ Refresh
