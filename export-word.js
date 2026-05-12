@@ -94,7 +94,7 @@ class SubmissionStore {
       const err = await res.json().catch(() => ({}));
       // 409 = SHA conflict (another user saved concurrently) — re-load and retry
       if (res.status === 409) throw Object.assign(new Error('conflict'), { isConflict: true });
-      throw new Error(`GitHub write error ${res.status}: ${err.message || res.statusText}`);
+      throw new Error(`Write error ${res.status}: ${err.message || res.statusText}`);
     }
     const json  = await res.json();
     this._sha   = json.content.sha;   // update SHA for the next write
@@ -457,7 +457,8 @@ function _generateWordDoc(store, formTitle, fileName, formHtmlFile) {
     }
 
     // Field table
-    const fields = sub.data.fields || [];
+    const statusLabels = ['Disbursement Status', 'Loan Facility Account Status', 'LOC Status', 'Repayment Status'];
+    const fields = (sub.data.fields || []).filter(f => !statusLabels.includes(f.label));
     if (fields.length > 0) {
       const tableRows = fields.map(f => new TableRow({
         children: [
@@ -564,14 +565,14 @@ const SubmissionManager = {
 
     // Show loading state
     const panel = document.getElementById('submissionsPanel');
-    if (panel) panel.innerHTML = `<div style="padding:16px;color:#94a3b8;font-size:0.88rem;text-align:center;">Loading submissions from GitHub…</div>`;
+    if (panel) panel.innerHTML = `<div style="padding:16px;color:#94a3b8;font-size:0.88rem;text-align:center;">Loading submissions...</div>`;
 
     try {
       await this._store.load();
     } catch (e) {
       if (panel) panel.innerHTML = `<div style="padding:16px;color:#dc2626;font-size:0.88rem;background:#fef2f2;border-radius:8px;">
-        <strong>Could not load data from GitHub.</strong><br>${_escapeHtml(e.message)}<br>
-        <small>Check that the token in GITHUB_CONFIG is set correctly.</small></div>`;
+        <strong>Could not load data.</strong><br>${_escapeHtml(e.message)}<br>
+        <small>Check that the token is set correctly.</small></div>`;
       return;
     }
 
@@ -619,11 +620,11 @@ const SubmissionManager = {
     try {
       if (this._editingId) {
         await this._store.update(this._editingId, data);
-        alert('Submission updated and committed to GitHub.');
+        alert('Submission updated successfully.');
       } else {
         const entry = await this._store.add(data);
         this._editingId = entry.id;
-        alert('Submission saved to GitHub.');
+        alert('Submission saved successfully.');
       }
     } catch (e) {
       alert('Save failed: ' + e.message);
@@ -650,7 +651,7 @@ const SubmissionManager = {
 
   /** Delete a submission and commit the change to GitHub. */
   async deleteSubmission(id) {
-    if (!confirm('Delete this submission? It will be permanently removed from GitHub.')) return;
+    if (!confirm('Delete this submission? It will be permanently removed.')) return;
     try {
       await this._store.remove(id);
     } catch (e) {
