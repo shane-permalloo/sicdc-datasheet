@@ -280,17 +280,22 @@
     }
   </style>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <style>
+    /* Force the Identity widget iframe above the auth gate overlay */
+    [data-netlify-identity-menu], .netlify-identity-widget { z-index: 10000 !important; }
+  </style>
 </head>
 <body>
 
   <!-- ── Auth Gate ────────────────────────────────────── -->
-  <div id="authGate" style="position:fixed;inset:0;background:#f8f9fc;z-index:9999;display:flex;align-items:center;justify-content:center;">
+  <div id="authGate" style="position:fixed;inset:0;background:#f8f9fc;z-index:1000;display:flex;align-items:center;justify-content:center;">
     <div style="background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:40px 36px;max-width:360px;width:90%;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
       <div style="font-size:2rem;margin-bottom:12px;">🔒</div>
       <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.08em;color:#2563eb;text-transform:uppercase;margin-bottom:4px;">SICDC</div>
       <h2 style="font-size:1.1rem;font-weight:700;color:#1e293b;margin-bottom:8px;">Data Sheet Portal</h2>
-      <p style="font-size:0.84rem;color:#64748b;margin-bottom:28px;">Sign in to access this form.</p>
-      <button onclick="netlifyIdentity.open()" style="background:#2563eb;color:#fff;border:none;border-radius:8px;padding:12px 0;font-size:0.9rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;width:100%;">Sign In</button>
+      <p style="font-size:0.84rem;color:#64748b;margin-bottom:20px;">Sign in to access this form.</p>
+      <button onclick="netlifyIdentity.open('login')" style="background:#2563eb;color:#fff;border:none;border-radius:8px;padding:12px 0;font-size:0.9rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;width:100%;">Sign In</button>
+      <p style="margin-top:14px;"><a href="#" onclick="event.preventDefault();netlifyIdentity.open('recovery')" style="font-size:0.78rem;color:#64748b;text-decoration:underline;">Forgot password?</a></p>
     </div>
   </div>
 
