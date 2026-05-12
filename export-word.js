@@ -49,19 +49,28 @@ class SubmissionStore {
     return `/.netlify/functions/github-proxy?file=${encodeURIComponent(this.filePath)}`;
   }
 
-  get _headers() {
-    const headers = { Accept: 'application/json' };
-    // Attach Netlify Identity JWT so the serverless proxy can verify the user
-    const user  = window.netlifyIdentity && window.netlifyIdentity.currentUser();
-    const token = user && user.token && user.token.access_token;
-    if (token) headers['Authorization'] = 'Bearer ' + token;
+  /** Build request headers, always fetching a fresh JWT via user.jwt() so tokens
+   *  never expire mid-session (Netlify Identity tokens live for 1 hour). */
+  async _getHeaders(extra) {
+    const headers = { Accept: 'application/json', ...extra };
+    const user = window.netlifyIdentity && window.netlifyIdentity.currentUser();
+    if (user) {
+      try {
+        // user.jwt() returns a promise and auto-refreshes the token if expired
+        const token = await user.jwt();
+        headers['Authorization'] = 'Bearer ' + token;
+      } catch (e) {
+        // Token refresh failed — the 401 from the proxy will surface a clean error
+        console.warn('Could not refresh Netlify Identity token:', e);
+      }
+    }
     return headers;
   }
 
   /** Fetch the file from GitHub (via proxy) and populate the cache. */
   async load() {
     const res = await fetch(this._apiBase, {
-      headers: this._headers
+      headers: await this._getHeaders()
     });
     if (res.status === 404) {
       // File not yet created in repo — start with empty array
@@ -92,7 +101,7 @@ class SubmissionStore {
 
     const res = await fetch(this._apiBase, {
       method:  'PUT',
-      headers: { ...this._headers, 'Content-Type': 'application/json' },
+      headers: await this._getHeaders({ 'Content-Type': 'application/json' }),
       body:    JSON.stringify(body)
     });
     if (!res.ok) {
