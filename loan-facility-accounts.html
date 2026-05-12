@@ -656,6 +656,12 @@
       SubmissionManager.init('loan-facility-accounts', 'loan-facility-accounts.html', 'Loan Facility Accounts Data Sheet', 'LoanFacilityAccounts-DataSheet');
     }
     netlifyIdentity.on('init', user => {
+      // Auto-open widget when following an invite / password-recovery email link
+      const hash = window.location.hash;
+      if (hash.includes('invite_token') || hash.includes('recovery_token') || hash.includes('confirmation_token')) {
+        netlifyIdentity.open();
+        return;
+      }
       if (user) {
         document.getElementById('authGate').style.display = 'none';
         document.getElementById('signOutBtn').style.display = '';
