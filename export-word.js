@@ -56,12 +56,18 @@ class SubmissionStore {
     const user = window.netlifyIdentity && window.netlifyIdentity.currentUser();
     if (user) {
       try {
-        // user.jwt() returns a promise and auto-refreshes the token if expired
-        const token = await user.jwt();
-        headers['Authorization'] = 'Bearer ' + token;
+        // user.jwt() auto-refreshes the token when near expiry.
+        // Fall back to the cached access_token if jwt() is not exposed by this
+        // version of the widget.
+        const token = typeof user.jwt === 'function'
+          ? await user.jwt()
+          : user.token && user.token.access_token;
+        if (token) headers['Authorization'] = 'Bearer ' + token;
       } catch (e) {
-        // Token refresh failed — the 401 from the proxy will surface a clean error
-        console.warn('Could not refresh Netlify Identity token:', e);
+        console.warn('Could not get Netlify Identity token:', e);
+        // Last-resort fallback to the cached token
+        const fallback = user.token && user.token.access_token;
+        if (fallback) headers['Authorization'] = 'Bearer ' + fallback;
       }
     }
     return headers;
