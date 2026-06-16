@@ -1,1 +1,117 @@
-﻿[]
+[
+  {
+    "id": "mqghnbpjdrhs",
+    "savedAt": "2026-06-16T10:17:31.399Z",
+    "data": {
+      "fields": [
+        {
+          "label": "LOC - LF Account",
+          "value": ""
+        },
+        {
+          "label": "LOC Status",
+          "value": "Draft"
+        },
+        {
+          "label": "Financial Institution",
+          "value": "SBMIDC"
+        },
+        {
+          "label": "Lending Agency",
+          "value": "EXIM Bank of India"
+        },
+        {
+          "label": "LOC Type",
+          "value": "LOC Type 1"
+        },
+        {
+          "label": "LOC Reference",
+          "value": "N/A"
+        },
+        {
+          "label": "LOC Amount",
+          "value": "500000000"
+        },
+        {
+          "label": "Currency",
+          "value": "USD"
+        },
+        {
+          "label": "Date Of Agreement",
+          "value": "2017-05-27"
+        },
+        {
+          "label": "Repayment Period",
+          "value": "20"
+        },
+        {
+          "label": "Interest Moratorium Period",
+          "value": "7"
+        },
+        {
+          "label": "Capital Moratorium Period",
+          "value": "7"
+        },
+        {
+          "label": "Dividend Rate",
+          "value": "1.8"
+        },
+        {
+          "label": "Capitalized Dividend Rate",
+          "value": "1.8"
+        },
+        {
+          "label": "Penalty Rate",
+          "value": "2"
+        },
+        {
+          "label": "Commitment Fee Rate",
+          "value": "0.5"
+        },
+        {
+          "label": "Year Factor",
+          "value": "360"
+        },
+        {
+          "label": "Payment Frequency",
+          "value": "Semi Yearly"
+        },
+        {
+          "label": "First Disbursement Date",
+          "value": "27/08/2019"
+        },
+        {
+          "label": "End Of Moratorium",
+          "value": "26/08/2026"
+        },
+        {
+          "label": "Interest Rate",
+          "value": "1.9"
+        },
+        {
+          "label": "Capitalized Interest Rate",
+          "value": "1.9"
+        }
+      ],
+      "crudTables": [
+        {
+          "title": "LF Accounts",
+          "headers": [
+            "Project Name",
+            "Loan Amount"
+          ],
+          "rows": []
+        },
+        {
+          "title": "Line of Credit (LOC) Details",
+          "headers": [
+            "Next Due Date on LOC",
+            "Revised Loan Amount",
+            "Closing Date"
+          ],
+          "rows": []
+        }
+      ]
+    }
+  }
+]
