@@ -113,5 +113,135 @@
         }
       ]
     }
+  },
+  {
+    "id": "mqghvgumf7ko",
+    "savedAt": "2026-06-16T10:23:51.310Z",
+    "data": {
+      "fields": [
+        {
+          "label": "LOC - LF Account",
+          "value": ""
+        },
+        {
+          "label": "LOC Status",
+          "value": "Draft"
+        },
+        {
+          "label": "Financial Institution",
+          "value": "SBMIDC"
+        },
+        {
+          "label": "Lending Agency",
+          "value": "EXIM Bank of India"
+        },
+        {
+          "label": "LOC Type",
+          "value": "LOC Type 2"
+        },
+        {
+          "label": "LOC Reference",
+          "value": "N/A"
+        },
+        {
+          "label": "LOC Amount",
+          "value": "190000000"
+        },
+        {
+          "label": "Currency",
+          "value": "USD"
+        },
+        {
+          "label": "Date Of Agreement",
+          "value": "2022-01-06"
+        },
+        {
+          "label": "Repayment Period",
+          "value": "20"
+        },
+        {
+          "label": "Interest Moratorium Period",
+          "value": "0"
+        },
+        {
+          "label": "Capital Moratorium Period",
+          "value": "7"
+        },
+        {
+          "label": "Dividend Rate",
+          "value": "1.8"
+        },
+        {
+          "label": "Capitalized Dividend Rate",
+          "value": "0"
+        },
+        {
+          "label": "Penalty Rate",
+          "value": "2"
+        },
+        {
+          "label": "Commitment Fee Rate",
+          "value": "0.5"
+        },
+        {
+          "label": "Year Factor",
+          "value": "360"
+        },
+        {
+          "label": "Payment Frequency",
+          "value": "Semi Yearly"
+        },
+        {
+          "label": "First Disbursement Date",
+          "value": "18/05/2022"
+        },
+        {
+          "label": "End Of Moratorium",
+          "value": "17/05/2029"
+        },
+        {
+          "label": "Interest Rate",
+          "value": "1.9"
+        },
+        {
+          "label": "Capitalized Interest Rate",
+          "value": "0"
+        }
+      ],
+      "crudTables": [
+        {
+          "title": "LF Accounts",
+          "headers": [
+            "Project Name",
+            "Loan Amount"
+          ],
+          "rows": []
+        },
+        {
+          "title": "Line of Credit (LOC) Details",
+          "headers": [
+            "Next Due Date on LOC",
+            "Revised Loan Amount",
+            "Closing Date"
+          ],
+          "rows": []
+        },
+        {
+          "title": "Saved Submissions",
+          "headers": [
+            "#",
+            "Saved At",
+            "Summary"
+          ],
+          "rows": [
+            [
+              "1",
+              "16 Jun 2026 14:17",
+              "SBMIDC | EXIM Bank of India | LOC Type 1"
+            ]
+          ]
+        }
+      ]
+    }
   }
 ]
