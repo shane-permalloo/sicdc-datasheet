@@ -728,5 +728,120 @@
         }
       ]
     }
+  },
+  {
+    "id": "mqp0hmant74d",
+    "savedAt": "2026-06-22T09:27:07.295Z",
+    "data": {
+      "fields": [
+        {
+          "label": "LOC - LF Account",
+          "value": ""
+        },
+        {
+          "label": "Loan Facility Account Status",
+          "value": "Draft"
+        },
+        {
+          "label": "Loan Facility Account Number",
+          "value": "N/A"
+        },
+        {
+          "label": "Line Of Credit (LOC) Reference",
+          "value": "GOILOC-240(9)"
+        },
+        {
+          "label": "Borrower Name",
+          "value": "The Central Electricity Board"
+        },
+        {
+          "label": "Project Name",
+          "value": "Design,Supply,Installation,Testing and Commissioning of an 8 MW Solar Photovoltaic Farm at Henrietta (Phase II) ,Tamarind Falls,Mauritius"
+        },
+        {
+          "label": "Loan Amount",
+          "value": "7518220.00"
+        },
+        {
+          "label": "First Disbursement Date",
+          "value": ""
+        },
+        {
+          "label": "Date Of Approval",
+          "value": "2021-11-15"
+        },
+        {
+          "label": "Commitment Fee Commencement Period (Months)",
+          "value": ""
+        },
+        {
+          "label": "Commitment Fee Start Date",
+          "value": ""
+        }
+      ],
+      "crudTables": [
+        {
+          "title": "LF Account Details",
+          "headers": [
+            "Closing Date",
+            "Final Disbursement Date",
+            "Project End Date",
+            "Terminal Of Disbursement Period (Months)",
+            "Terminal Disbursement Date"
+          ],
+          "rows": []
+        },
+        {
+          "title": "Saved Submissions",
+          "headers": [
+            "#",
+            "Saved At",
+            "Summary"
+          ],
+          "rows": [
+            [
+              "1",
+              "22 Jun 2026 12:43",
+              "N/A | GOILOC-240(1) | National Housing Development Company Ltd"
+            ],
+            [
+              "2",
+              "22 Jun 2026 12:53",
+              "Loc 1 | N/A | GOILOC-240(2)"
+            ],
+            [
+              "3",
+              "22 Jun 2026 12:56",
+              "N/A | GOILOC-240(3) | Government of Mauritius"
+            ],
+            [
+              "4",
+              "22 Jun 2026 12:58",
+              "N/A | GOILOC-240(4) | Government of Mauritius"
+            ],
+            [
+              "5",
+              "22 Jun 2026 13:01",
+              "N/A | GOILOC-240(5) | Government of Mauritius"
+            ],
+            [
+              "6",
+              "22 Jun 2026 13:12",
+              "N/A | GOILOC-240(6) | Government of Mauritius"
+            ],
+            [
+              "7",
+              "22 Jun 2026 13:17",
+              "N/A | GOILOC-240(7) | Government of Mauritius"
+            ],
+            [
+              "8",
+              "22 Jun 2026 13:21",
+              "GOILOC-240(8) | Government of Mauritius | Acquisition of 13 Trailer Mounted Flood Pumps"
+            ]
+          ]
+        }
+      ]
+    }
   }
 ]
