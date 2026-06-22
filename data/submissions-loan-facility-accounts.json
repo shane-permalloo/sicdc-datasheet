@@ -1,1 +1,67 @@
-﻿[]
+[
+  {
+    "id": "mqoywyk6q1nv",
+    "savedAt": "2026-06-22T08:43:03.798Z",
+    "data": {
+      "fields": [
+        {
+          "label": "LOC - LF Account",
+          "value": ""
+        },
+        {
+          "label": "Loan Facility Account Status",
+          "value": "Draft"
+        },
+        {
+          "label": "Loan Facility Account Number",
+          "value": "N/A"
+        },
+        {
+          "label": "Line Of Credit (LOC) Reference",
+          "value": "GOILOC-240(1)"
+        },
+        {
+          "label": "Borrower Name",
+          "value": "National Housing Development Company Ltd"
+        },
+        {
+          "label": "Project Name",
+          "value": "Construction of Social Housing Units at Mare Tabac and Dagotiere"
+        },
+        {
+          "label": "Loan Amount",
+          "value": "25000000.00"
+        },
+        {
+          "label": "First Disbursement Date",
+          "value": ""
+        },
+        {
+          "label": "Date Of Approval",
+          "value": "2019-07-05"
+        },
+        {
+          "label": "Commitment Fee Commencement Period (Months)",
+          "value": ""
+        },
+        {
+          "label": "Commitment Fee Start Date",
+          "value": ""
+        }
+      ],
+      "crudTables": [
+        {
+          "title": "LF Account Details",
+          "headers": [
+            "Closing Date",
+            "Final Disbursement Date",
+            "Project End Date",
+            "Terminal Of Disbursement Period (Months)",
+            "Terminal Disbursement Date"
+          ],
+          "rows": []
+        }
+      ]
+    }
+  }
+]
