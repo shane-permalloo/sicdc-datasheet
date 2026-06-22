@@ -63,5 +63,85 @@
         }
       ]
     }
+  },
+  {
+    "id": "mqozary4vo9v",
+    "savedAt": "2026-06-22T08:53:48.412Z",
+    "data": {
+      "fields": [
+        {
+          "label": "LOC - LF Account",
+          "value": "Loc 1"
+        },
+        {
+          "label": "Loan Facility Account Status",
+          "value": "Draft"
+        },
+        {
+          "label": "Loan Facility Account Number",
+          "value": "N/A"
+        },
+        {
+          "label": "Line Of Credit (LOC) Reference",
+          "value": "GOILOC-240(2)"
+        },
+        {
+          "label": "Borrower Name",
+          "value": "Metro Express Ltd"
+        },
+        {
+          "label": "Project Name",
+          "value": "Construction of Metro Express System(Phase I and II)"
+        },
+        {
+          "label": "Loan Amount",
+          "value": "260000000"
+        },
+        {
+          "label": "First Disbursement Date",
+          "value": ""
+        },
+        {
+          "label": "Date Of Approval",
+          "value": "2019-12-27"
+        },
+        {
+          "label": "Commitment Fee Commencement Period (Months)",
+          "value": ""
+        },
+        {
+          "label": "Commitment Fee Start Date",
+          "value": ""
+        }
+      ],
+      "crudTables": [
+        {
+          "title": "LF Account Details",
+          "headers": [
+            "Closing Date",
+            "Final Disbursement Date",
+            "Project End Date",
+            "Terminal Of Disbursement Period (Months)",
+            "Terminal Disbursement Date"
+          ],
+          "rows": []
+        },
+        {
+          "title": "Saved Submissions",
+          "headers": [
+            "#",
+            "Saved At",
+            "Summary"
+          ],
+          "rows": [
+            [
+              "1",
+              "22 Jun 2026 12:43",
+              "N/A | GOILOC-240(1) | National Housing Development Company Ltd"
+            ]
+          ]
+        }
+      ]
+    }
   }
 ]
