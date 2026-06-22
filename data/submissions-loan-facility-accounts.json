@@ -318,5 +318,100 @@
         }
       ]
     }
+  },
+  {
+    "id": "mqozksouxnvt",
+    "savedAt": "2026-06-22T09:01:35.934Z",
+    "data": {
+      "fields": [
+        {
+          "label": "LOC - LF Account",
+          "value": ""
+        },
+        {
+          "label": "Loan Facility Account Status",
+          "value": "Draft"
+        },
+        {
+          "label": "Loan Facility Account Number",
+          "value": "N/A"
+        },
+        {
+          "label": "Line Of Credit (LOC) Reference",
+          "value": "GOILOC-240(5)"
+        },
+        {
+          "label": "Borrower Name",
+          "value": "Government of Mauritius"
+        },
+        {
+          "label": "Project Name",
+          "value": "Construction of Forensic Science Laboratory"
+        },
+        {
+          "label": "Loan Amount",
+          "value": "586985.00"
+        },
+        {
+          "label": "First Disbursement Date",
+          "value": ""
+        },
+        {
+          "label": "Date Of Approval",
+          "value": "2020-01-10"
+        },
+        {
+          "label": "Commitment Fee Commencement Period (Months)",
+          "value": ""
+        },
+        {
+          "label": "Commitment Fee Start Date",
+          "value": ""
+        }
+      ],
+      "crudTables": [
+        {
+          "title": "LF Account Details",
+          "headers": [
+            "Closing Date",
+            "Final Disbursement Date",
+            "Project End Date",
+            "Terminal Of Disbursement Period (Months)",
+            "Terminal Disbursement Date"
+          ],
+          "rows": []
+        },
+        {
+          "title": "Saved Submissions",
+          "headers": [
+            "#",
+            "Saved At",
+            "Summary"
+          ],
+          "rows": [
+            [
+              "1",
+              "22 Jun 2026 12:43",
+              "N/A | GOILOC-240(1) | National Housing Development Company Ltd"
+            ],
+            [
+              "2",
+              "22 Jun 2026 12:53",
+              "Loc 1 | N/A | GOILOC-240(2)"
+            ],
+            [
+              "3",
+              "22 Jun 2026 12:56",
+              "N/A | GOILOC-240(3) | Government of Mauritius"
+            ],
+            [
+              "4",
+              "22 Jun 2026 12:58",
+              "N/A | GOILOC-240(4) | Government of Mauritius"
+            ]
+          ]
+        }
+      ]
+    }
   }
 ]
