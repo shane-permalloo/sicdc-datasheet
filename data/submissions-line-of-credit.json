@@ -1,12 +1,12 @@
 [
   {
     "id": "mqghnbpjdrhs",
-    "savedAt": "2026-06-16T10:17:31.399Z",
+    "savedAt": "2026-06-25T08:28:23.023Z",
     "data": {
       "fields": [
         {
           "label": "LOC - LF Account",
-          "value": ""
+          "value": "Exim 500 Millions"
         },
         {
           "label": "LOC Status",
@@ -110,6 +110,26 @@
             "Closing Date"
           ],
           "rows": []
+        },
+        {
+          "title": "Saved Submissions",
+          "headers": [
+            "#",
+            "Saved At",
+            "Summary"
+          ],
+          "rows": [
+            [
+              "1",
+              "16 Jun 2026 14:17",
+              "SBMIDC | EXIM Bank of India | LOC Type 1"
+            ],
+            [
+              "2",
+              "16 Jun 2026 14:23",
+              "SBMIDC | EXIM Bank of India | LOC Type 2"
+            ]
+          ]
         }
       ]
     }
