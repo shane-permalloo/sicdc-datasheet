@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SICDC LRPSMS – Project Gantt Chart</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:          #0b0f1a;
+    --surface:     #111827;
+    --border:      #1e2d45;
+    --text:        #e8edf5;
+    --muted:       #5a7090;
+    --accent:      #2563eb;
+    --accent-glow: rgba(37,99,235,.25);
+    --cell-weekend: #0e1424;
+    --cell-past:    #0a0e17;
+    --day-weekend-color: #2f4565;
+    --day-weekend-bg: #0e1424;
+    --day-past-color: #1e3050;
+    --cell-border:  rgba(255,255,255,.03);
+    --bar-text:     rgba(255,255,255,.9);
+    --hover-bg:     rgba(37,99,235,.06);
+    --today-col-bg: rgba(37,99,235,.07);
+    --today-col-border: rgba(37,99,235,.5);
+    --bar-gloss:    rgba(255,255,255,.12);
+
+    /* Workstream colours */
+    --c-infra:    #0ea5e9;
+    --c-data:     #f59e0b;
+    --c-training: #10b981;
+    --c-access:   #a855f7;
+    --c-billing:  #f97316;
+    --c-valid:    #06b6d4;
+    --c-bug:      #ef4444;
+    --c-golive:   #22c55e;
+
+    --row-h:      46px;
+    --header-h:   64px;
+  }
+
+  /* ── LIGHT MODE ─────────────────────────────────────── */
+  :root.light {
+    --bg:          #f8f9fc;
+    --surface:     #ffffff;
+    --border:      #e2e8f0;
+    --text:        #1e293b;
+    --muted:       #64748b;
+    --accent:      #2563eb;
+    --accent-glow: rgba(37,99,235,.15);
+    --cell-weekend: #f1f5f9;
+    --cell-past:    #f8fafc;
+    --day-weekend-color: #94a3b8;
+    --day-weekend-bg: #f1f5f9;
+    --day-past-color: #cbd5e1;
+    --cell-border:  rgba(0,0,0,.06);
+    --bar-text:     #ffffff;
+    --hover-bg:     rgba(37,99,235,.06);
+    --today-col-bg: rgba(37,99,235,.06);
+    --today-col-border: rgba(37,99,235,.3);
+    --bar-gloss:    rgba(255,255,255,.2);
+
+    --c-data:     #d97706;
+    --c-training: #059669;
+    --c-access:   #7c3aed;
+    --c-billing:  #ea580c;
+    --c-valid:    #0891b2;
+    --c-bug:      #dc2626;
+    --c-golive:   #16a34a;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+  }
+
+  /* ── TOP BAR ─────────────────────────────────────────── */
+  #topbar {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: var(--header-h);
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+  }
+  #topbar .logo {
+    font-weight: 800;
+    font-size: 1.35rem;
+    letter-spacing: .04em;
+    color: var(--text);
+  }
+  #topbar .logo span { color: var(--accent); }
+  #topbar .meta {
+    font-size: .88rem;
+    color: var(--muted);
+    font-weight: 400;
+    letter-spacing: .03em;
+  }
+  #topbar .today-badge {
+    background: var(--accent);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: .82rem;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 999px;
+    letter-spacing: .06em;
+  }
+  #topbar .theme-toggle {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: .82rem;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    letter-spacing: .04em;
+    transition: background .2s, border-color .2s;
+    margin-left: 12px;
+  }
+  #topbar .theme-toggle:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  /* ── LEGEND ─────────────────────────────────────────── */
+  #legend {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    height: 44px;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; gap: 24px;
+    padding: 0 32px;
+    z-index: 100;
+  }
+  .leg-item { display: flex; align-items: center; gap: 7px; }
+  .leg-dot  { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+  .leg-label { font-size: .82rem; color: var(--muted); white-space: nowrap; }
+
+  /* ── SCROLL CONTAINER ──────────────────────────────── */
+  #scroll-wrap {
+    position: fixed;
+    top: var(--header-h); bottom: 44px; left: 0; right: 0;
+    overflow: auto;
+  }
+
+  /* ── GRID ──────────────────────────────────────────── */
+  #gantt {
+    display: grid;
+    /* col 1: workstream label, col 2: task, col 3: assignee, col 4+: days */
+    min-width: 1400px;
+  }
+
+  /* ── STICKY MONTH / DAY HEADER ─────────────────────── */
+  .hdr-row {
+    display: contents;
+  }
+  .hdr-cell {
+    position: sticky; top: 0;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    z-index: 50;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Inter', sans-serif;
+    font-size: .8rem;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    height: 28px;
+  }
+  .hdr-month {
+    position: sticky; top: 0;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    z-index: 50;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Inter', sans-serif;
+    font-size: .85rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    height: 28px;
+    border-right: 1px solid var(--border);
+  }
+  .hdr-month-spacer {
+    position: sticky; top: 0;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    z-index: 50;
+    height: 28px;
+  }
+  .day-hdr {
+    position: sticky; top: 28px;
+    background: var(--surface);
+    border-bottom: 2px solid var(--border);
+    z-index: 50;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .78rem;
+    font-weight: 500;
+    color: var(--muted);
+    height: 28px;
+    border-right: 1px solid var(--cell-border);
+    transition: color .2s;
+  }
+  .day-hdr.weekend { color: var(--day-weekend-color); background: var(--day-weekend-bg); }
+  .day-hdr.today   { color: #fff; background: var(--accent); border-color: var(--accent); }
+  .day-hdr.past    { color: var(--day-past-color); }
+  .label-hdr {
+    position: sticky; top: 0; left: 0;
+    background: var(--surface);
+    z-index: 80;
+    height: 52px;
+    border-bottom: 2px solid var(--border);
+    border-right: 1px solid var(--border);
+    display: flex; align-items: center;
+    padding: 0 16px;
+    font-family: 'Inter', sans-serif; font-size: .8rem; font-weight: 700;
+    color: var(--muted); letter-spacing: .08em; text-transform: uppercase;
+  }
+
+  /* ── DATA ROWS ─────────────────────────────────────── */
+  .row {
+    display: contents;
+  }
+  .row:hover .cell,
+  .row:hover .ws-cell,
+  .row:hover .task-cell,
+  .row:hover .asgn-cell { background: var(--hover-bg); }
+
+  .ws-cell {
+    position: sticky; left: 0;
+    background: var(--bg);
+    z-index: 30;
+    display: flex; align-items: center;
+    padding: 0 0 0 16px;
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    height: var(--row-h);
+    font-family: 'Inter', sans-serif;
+    font-size: .8rem; font-weight: 700;
+    letter-spacing: .06em; text-transform: uppercase;
+    transition: background .15s;
+    white-space: nowrap;
+  }
+  .ws-tag {
+    display: flex; align-items: center; gap: 7px;
+  }
+  .ws-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+
+  .task-cell {
+    background: var(--bg);
+    z-index: 10;
+    display: flex; align-items: center;
+    padding: 0 12px;
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    height: var(--row-h);
+    font-size: .88rem; font-weight: 400;
+    line-height: 1.3; color: var(--text);
+    transition: background .15s;
+  }
+  .asgn-cell {
+    background: var(--bg);
+    z-index: 10;
+    display: flex; align-items: center;
+    padding: 0 10px;
+    border-bottom: 1px solid var(--border);
+    border-right: 2px solid var(--border);
+    height: var(--row-h);
+    font-size: .82rem; color: var(--muted);
+    white-space: nowrap;
+    transition: background .15s;
+  }
+
+  .cell {
+    background: var(--bg);
+    border-bottom: 1px solid var(--cell-border);
+    border-right: 1px solid var(--cell-border);
+    height: var(--row-h);
+    position: relative;
+    transition: background .15s;
+  }
+  .cell.weekend { background: var(--cell-weekend); }
+  .cell.today-col { background: var(--today-col-bg); border-right: 1px solid var(--today-col-border); }
+  .cell.past     { background: var(--cell-past); }
+
+  /* ── BAR ───────────────────────────────────────────── */
+  .bar {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    left: 3px; right: 3px;
+    height: 22px;
+    border-radius: 5px;
+    display: flex; align-items: center;
+    padding: 0 8px;
+    font-size: .76rem; font-weight: 600;
+    color: var(--bar-text);
+    letter-spacing: .02em;
+    overflow: hidden;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0,0,0,.25);
+  }
+  .bar::after {
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: inherit;
+  }
+
+  /* ── TODAY LINE ─────────────────────────────────────── */
+  .today-line {
+    position: absolute; top: 0; bottom: 0;
+    left: 50%; width: 2px;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent-glow);
+    z-index: 20; pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div id="topbar">
+  <div class="logo"><span>SICDC</span> LRPSMS &nbsp;·&nbsp; Project Rollout Plan</div>
+  <div class="meta">Updated: 25 June 2026</div>
+  <div class="today-badge" id="todayBadge">TODAY</div>
+  <button class="theme-toggle" id="themeToggle" title="Toggle Light/Dark Mode">☽ Dark</button>
+</div>
+
+<!-- LEGEND -->
+<div id="legend">
+  <div class="leg-item"><div class="leg-dot" style="background:var(--c-data)"></div><span class="leg-label">Migration Schedule & Data Migration/</span></div>
+  <div class="leg-item"><div class="leg-dot" style="background:var(--c-training)"></div><span class="leg-label">Training Schedule & Training</span></div>
+  <div class="leg-item"><div class="leg-dot" style="background:var(--c-access)"></div><span class="leg-label">User Matrix</span></div>
+  <div class="leg-item"><div class="leg-dot" style="background:var(--c-billing)"></div><span class="leg-label">Billing</span></div>
+  <div class="leg-item"><div class="leg-dot" style="background:var(--c-valid)"></div><span class="leg-label">Validation</span></div>
+  <div class="leg-item"><div class="leg-dot" style="background:var(--c-bug)"></div><span class="leg-label">Bug Management & Fixing</span></div>
+  <div class="leg-item"><div class="leg-dot" style="background:var(--c-golive)"></div><span class="leg-label">Go-Live</span></div>
+</div>
+
+<!-- SCROLL WRAPPER -->
+<div id="scroll-wrap">
+  <div id="gantt"></div>
+</div>
+
+<script>
+// ── DATA ─────────────────────────────────────────────────
+const TASKS = [
+  { ws:"Migration Prep",    task:"Prepare SICDC migration data sheet",               assignee:"SICDC Team",            start:"2026-06-24", end:"2026-07-10" },
+    { ws:"User Matrix",       task:"Create user roles and credentials in back-office",  assignee:"SICDC Team",           start:"2026-06-24", end:"2026-07-03" },
+{ ws:"Migration Sch.",    task:"Coordinate and schedule migration session",         assignee:"Project Coordinator",  start:"2026-06-29", end:"2026-07-03" },
+  { ws:"Training Sch.",          task:"Schedule training sessions with dates",             assignee:"Project Coordinator",  start:"2026-06-29", end:"2026-07-03" },
+  { ws:"Training",          task:"Conduct operations officer training – Day 1",       assignee:"MNS Team",        start:"2026-07-07", end:"2026-07-07" },
+  { ws:"Training",          task:"Conduct operations officer training – Day 2",       assignee:"MNS Team",        start:"2026-07-08", end:"2026-07-08" },
+  { ws:"Training",          task:"Conduct IT administrator training session",         assignee:"MNS Team",        start:"2026-07-09", end:"2026-07-09" },
+  { ws:"Training",          task:"Conduct manager training session",                  assignee:"MNS Team",        start:"2026-07-10", end:"2026-07-10" },
+  { ws:"Data Migration",    task:"Execute data migration with SICDC team",            assignee:"SICDC Team",      start:"2026-07-13", end:"2026-07-17" },
+  { ws:"Billing",           task:"Process outstanding billing + hosting charges",     assignee:"Finance Team",         start:"2026-07-16", end:"2026-07-17" },
+  { ws:"Validation",        task:"Verify migrated data and computation with CFO",                     assignee:"CFO Team",             start:"2026-07-16", end:"2026-07-17" },
+  { ws:"Bug Management",    task:"Document and log identified minor bugs",            assignee:"MNS QA Team",              start:"2026-07-17", end:"2026-07-17" },
+  { ws:"Bug Fixing",    task:"Fix identified bugs in system",                     assignee:"MNS Team",     start:"2026-07-20", end:"2026-07-23" },
+  { ws:"Bug Management",    task:"Retest fixed functionality with team",              assignee:"MNS QA Team",              start:"2026-07-24", end:"2026-07-24" },
+  { ws:"Go-Live Prep",task:"Conduct final pre-go-live system check",           assignee:"MNS Infra Team",  start:"2026-07-24", end:"2026-07-24" },
+  { ws:"Go-Live",           task:"Execute official go-live activation",              assignee:"SICDC Team",            start:"2026-07-27", end:"2026-07-27" },
+];
+
+const WS_COLORS = {
+  "Data Migration":     "var(--c-data)",
+  "Migration Sch.": "var(--c-data)",
+  "Migration Prep": "var(--c-data)",
+  "Training":           "var(--c-training)",
+  "Training Sch.":  "var(--c-training)",
+  "User Matrix":        "var(--c-access)",
+  "Billing":            "var(--c-billing)",
+  "Validation":         "var(--c-valid)",
+  "Bug Management":     "var(--c-bug)",
+  "Bug Fixing":     "var(--c-bug)",
+  "Go-Live Prep":       "var(--c-golive)",
+  "Go-Live":            "var(--c-golive)",
+};
+
+// ── BUILD DATE RANGE ──────────────────────────────────────
+const parseDate = s => new Date(s + "T00:00:00");
+const allDates  = TASKS.flatMap(t => [parseDate(t.start), parseDate(t.end)]);
+const minDate   = new Date(Math.min(...allDates));
+const maxDate   = new Date(Math.max(...allDates));
+
+// Pad 3 days on each side
+minDate.setDate(minDate.getDate() - 3);
+maxDate.setDate(maxDate.getDate() + 4);
+
+const days = [];
+let cur = new Date(minDate);
+while (cur <= maxDate) { days.push(new Date(cur)); cur.setDate(cur.getDate()+1); }
+
+const dayIndex = d => days.findIndex(x => x.toDateString() === d.toDateString());
+const todayDate = new Date(); todayDate.setHours(0,0,0,0);
+const todayIdx  = dayIndex(todayDate);
+
+// ── UPDATE BADGE ─────────────────────────────────────────
+document.getElementById('todayBadge').textContent =
+  todayDate.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
+
+// ── COLUMN WIDTHS ─────────────────────────────────────────
+const COL_WS    = 170;
+const COL_TASK  = 310;
+const COL_ASGN  = 150;
+const COL_DAY   = 34;
+
+// ── BUILD GRID ────────────────────────────────────────────
+const gantt = document.getElementById('gantt');
+const nCols = 3 + days.length;
+
+gantt.style.gridTemplateColumns =
+  `${COL_WS}px ${COL_TASK}px ${COL_ASGN}px ` +
+  `repeat(${days.length}, ${COL_DAY}px)`;
+
+// ── HELPER: month groups ──────────────────────────────────
+function buildMonthGroups(days) {
+  const groups = [];
+  let cur = null;
+  days.forEach((d, i) => {
+    const key = d.toLocaleDateString('en-GB', { month:'long', year:'numeric' });
+    if (!cur || cur.label !== key) { cur = { label: key, start: i, count: 0 }; groups.push(cur); }
+    cur.count++;
+  });
+  return groups;
+}
+
+// ── ROW 1: Month headers ──────────────────────────────────
+const monthGroups = buildMonthGroups(days);
+
+// sticky left filler (spans 3 label cols across both header rows = 52px total)
+const filler = document.createElement('div');
+filler.className = 'label-hdr';
+filler.style.gridRow    = '1 / span 2';
+filler.style.gridColumn = '1 / span 3';
+filler.textContent = 'Workstream / Task';
+gantt.appendChild(filler);
+
+// month spans
+monthGroups.forEach(g => {
+  const el = document.createElement('div');
+  el.className = 'hdr-month';
+  el.style.gridColumn = `${3 + g.start + 1} / span ${g.count}`;
+  el.style.gridRow = '1';
+  el.textContent = g.label;
+  gantt.appendChild(el);
+});
+
+// ── ROW 2: Day headers ────────────────────────────────────
+days.forEach((d, i) => {
+  const el = document.createElement('div');
+  el.className = 'day-hdr';
+  const dow = d.getDay();
+  const isWeekend = dow === 0 || dow === 6;
+  const isToday   = d.toDateString() === todayDate.toDateString();
+  const isPast    = d < todayDate;
+  if (isToday)   el.classList.add('today');
+  else if (isWeekend) el.classList.add('weekend');
+  else if (isPast)    el.classList.add('past');
+  el.style.gridColumn = `${3 + i + 1}`;
+  el.style.gridRow    = '2';
+  el.textContent = d.getDate();
+  gantt.appendChild(el);
+});
+
+// ── DATA ROWS ─────────────────────────────────────────────
+TASKS.forEach((t, rowIdx) => {
+  const gridRow = rowIdx + 3; // rows 1 & 2 = headers
+
+  // Workstream cell
+  const wsEl = document.createElement('div');
+  wsEl.className = 'ws-cell';
+  wsEl.style.gridColumn = '1';
+  wsEl.style.gridRow    = gridRow;
+  const color = WS_COLORS[t.ws] || 'var(--muted)';
+  wsEl.innerHTML = `<div class="ws-tag"><div class="ws-dot" style="background:${color}"></div>${t.ws}</div>`;
+  gantt.appendChild(wsEl);
+
+  // Task cell
+  const tkEl = document.createElement('div');
+  tkEl.className = 'task-cell';
+  tkEl.style.gridColumn = '2';
+  tkEl.style.gridRow    = gridRow;
+  tkEl.textContent = t.task;
+  gantt.appendChild(tkEl);
+
+  // Assignee cell
+  const aEl = document.createElement('div');
+  aEl.className = 'asgn-cell';
+  aEl.style.gridColumn = '3';
+  aEl.style.gridRow    = gridRow;
+  aEl.textContent = t.assignee;
+  gantt.appendChild(aEl);
+
+  // Day cells
+  const tStart = parseDate(t.start);
+  const tEnd   = parseDate(t.end);
+
+  days.forEach((d, i) => {
+    const col = 4 + i;
+    const cell = document.createElement('div');
+    cell.className = 'cell';
+    cell.style.gridColumn = col;
+    cell.style.gridRow    = gridRow;
+
+    const dow = d.getDay();
+    const isWeekend = dow === 0 || dow === 6;
+    const isToday   = d.toDateString() === todayDate.toDateString();
+    const isPast    = d < todayDate;
+
+    if (isToday)        cell.classList.add('today-col');
+    else if (isWeekend) cell.classList.add('weekend');
+    else if (isPast)    cell.classList.add('past');
+
+    // Today line
+    if (isToday) {
+      const line = document.createElement('div');
+      line.className = 'today-line';
+      cell.appendChild(line);
+    }
+
+    // Bar: render on the FIRST day of the task
+    if (d.toDateString() === tStart.toDateString()) {
+      const dur = dayIndex(tEnd) - dayIndex(tStart) + 1;
+      const barW = dur * COL_DAY - 6;
+      const bar  = document.createElement('div');
+      bar.className = 'bar';
+      bar.style.width  = barW + 'px';
+      bar.style.background = color;
+      bar.style.boxShadow  = `0 2px 12px ${color}55`;
+      bar.style.zIndex     = '15';
+      bar.style.left       = '3px';
+      if (dur > 2) bar.textContent = t.ws;
+      cell.appendChild(bar);
+    }
+
+    gantt.appendChild(cell);
+  });
+});
+
+// ── SCROLL TO TODAY ───────────────────────────────────────
+if (todayIdx >= 0) {
+  const wrap = document.getElementById('scroll-wrap');
+  const xPos = COL_WS + COL_TASK + COL_ASGN + todayIdx * COL_DAY - (wrap.clientWidth / 2) + COL_DAY / 2;
+  wrap.scrollLeft = Math.max(0, xPos);
+}
+
+// ── THEME TOGGLE ──────────────────────────────────────────
+const themeBtn = document.getElementById('themeToggle');
+themeBtn.addEventListener('click', () => {
+  document.documentElement.classList.toggle('light');
+  const isLight = document.documentElement.classList.contains('light');
+  themeBtn.textContent = isLight ? '\u263D Dark' : '\u2600 Light';
+  });
+</script>
+</body>
+</html>
