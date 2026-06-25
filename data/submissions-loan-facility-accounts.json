@@ -1,12 +1,12 @@
 [
   {
     "id": "mqoywyk6q1nv",
-    "savedAt": "2026-06-22T11:45:21.492Z",
+    "savedAt": "2026-06-25T08:45:51.710Z",
     "data": {
       "fields": [
         {
           "label": "LOC - LF Account",
-          "value": ""
+          "value": "Exim 500 Millions"
         },
         {
           "label": "Loan Facility Account Status",
@@ -14,7 +14,7 @@
         },
         {
           "label": "Loan Facility Account Number",
-          "value": "N/A"
+          "value": "NHDC-01"
         },
         {
           "label": "Line Of Credit (LOC) Reference",
@@ -71,7 +71,7 @@
           "rows": [
             [
               "1",
-              "22 Jun 2026 12:43",
+              "22 Jun 2026 15:45",
               "N/A | GOILOC-240(1) | National Housing Development Company Ltd"
             ],
             [
