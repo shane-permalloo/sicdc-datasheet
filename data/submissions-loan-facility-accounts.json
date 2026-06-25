@@ -1681,12 +1681,12 @@
   },
   {
     "id": "mqp24jhq42zz",
-    "savedAt": "2026-06-22T10:12:56.366Z",
+    "savedAt": "2026-06-25T09:02:42.931Z",
     "data": {
       "fields": [
         {
           "label": "LOC - LF Account",
-          "value": ""
+          "value": "Exim 190 Millions "
         },
         {
           "label": "Loan Facility Account Status",
@@ -1694,7 +1694,7 @@
         },
         {
           "label": "Loan Facility Account Number",
-          "value": "N/A"
+          "value": "PMC-LAPC-01"
         },
         {
           "label": "Line Of Credit (LOC) Reference",
@@ -1722,7 +1722,7 @@
         },
         {
           "label": "Commitment Fee Commencement Period (Months)",
-          "value": ""
+          "value": "2"
         },
         {
           "label": "Commitment Fee Start Date",
@@ -1751,63 +1751,68 @@
           "rows": [
             [
               "1",
-              "22 Jun 2026 12:43",
-              "N/A | GOILOC-240(1) | National Housing Development Company Ltd"
+              "25 Jun 2026 12:45",
+              "Exim 500 Millions | NHDC-01 | GOILOC-240(1)"
             ],
             [
               "2",
-              "22 Jun 2026 12:53",
-              "Loc 1 | N/A | GOILOC-240(2)"
+              "25 Jun 2026 12:49",
+              "Exim 500 Millions | MEL01-01 | GOILOC-240(2)"
             ],
             [
               "3",
-              "22 Jun 2026 12:56",
-              "N/A | GOILOC-240(3) | Government of Mauritius"
+              "25 Jun 2026 12:51",
+              "Exim 500 Millions | MOLG-INC-01 | GOILOC-240(3)"
             ],
             [
               "4",
-              "22 Jun 2026 12:58",
-              "N/A | GOILOC-240(4) | Government of Mauritius"
+              "25 Jun 2026 12:52",
+              "Exim 500 Millions | PMO-MDFA-01 | GOILOC-240(4)"
             ],
             [
               "5",
-              "22 Jun 2026 13:01",
-              "N/A | GOILOC-240(5) | Government of Mauritius"
+              "25 Jun 2026 12:52",
+              "Exim 500 Millions | PMO-FSL(PMC)-01 | GOILOC-240(5)"
             ],
             [
               "6",
-              "22 Jun 2026 13:12",
-              "N/A | GOILOC-240(6) | Government of Mauritius"
+              "25 Jun 2026 12:53",
+              "Exim 500 Millions | MOA-NANL(PMC)-01 | GOILOC-240(6)"
             ],
             [
               "7",
-              "22 Jun 2026 13:17",
-              "N/A | GOILOC-240(7) | Government of Mauritius"
+              "25 Jun 2026 12:54",
+              "Exim 500 Millions | MOLG-FFV-01 | GOILOC-240(7)"
             ],
             [
               "8",
-              "22 Jun 2026 13:21",
-              "GOILOC-240(8) | Government of Mauritius | Acquisition of 13 Trailer Mounted Flood Pumps"
+              "25 Jun 2026 12:55",
+              "Exim 500 Millions | MOLG-PUMP-01 | GOILOC-240(8)"
             ],
             [
               "9",
-              "22 Jun 2026 13:27",
-              "N/A | GOILOC-240(9) | The Central Electricity Board"
+              "25 Jun 2026 12:59",
+              "Exim 500 Millions | CEB-PV-01 | GOILOC-240(9)"
             ],
             [
               "10",
-              "22 Jun 2026 13:34",
-              "N/A | GOILOC-240(10) | Government of Mauritius"
+              "25 Jun 2026 13:00",
+              "Exim 500 Millions | PMO-FSL(W)-01 | GOILOC-240(10)"
             ],
             [
               "11",
-              "22 Jun 2026 13:36",
-              "GOILOC-240(11) | Government of Mauritius | Construction of National Archives and National Library"
+              "25 Jun 2026 13:01",
+              "Exim 500 Millions | MOA-NANL(W)-01 | GOILOC-240(11)"
             ],
             [
               "12",
-              "22 Jun 2026 13:39",
-              "N/A | GOILOC-240(13) | Construction of Metro Express System(Phase III)"
+              "25 Jun 2026 13:02",
+              "Exim 190 Millions  | MEL02-01 | GOILOC-240(13)"
+            ],
+            [
+              "13",
+              "22 Jun 2026 14:12",
+              "N/A | GOILOC-240(A-2) | Government of Mauritius"
             ]
           ]
         }
