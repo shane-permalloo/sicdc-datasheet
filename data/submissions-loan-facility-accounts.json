@@ -1541,7 +1541,7 @@
   },
   {
     "id": "mqp0x191d594",
-    "savedAt": "2026-06-25T09:02:08.674Z",
+    "savedAt": "2026-06-25T09:03:00.458Z",
     "data": {
       "fields": [
         {
@@ -1582,7 +1582,7 @@
         },
         {
           "label": "Commitment Fee Commencement Period (Months)",
-          "value": ""
+          "value": "2"
         },
         {
           "label": "Commitment Fee Start Date",
@@ -1666,13 +1666,13 @@
             ],
             [
               "12",
-              "22 Jun 2026 13:39",
-              "N/A | GOILOC-240(13) | Construction of Metro Express System(Phase III)"
+              "25 Jun 2026 13:02",
+              "Exim 190 Millions  | MEL02-01 | GOILOC-240(13)"
             ],
             [
               "13",
-              "22 Jun 2026 14:12",
-              "N/A | GOILOC-240(A-2) | Government of Mauritius"
+              "25 Jun 2026 13:02",
+              "Exim 190 Millions  | PMC-LAPC-01 | GOILOC-240(A-2)"
             ]
           ]
         }
