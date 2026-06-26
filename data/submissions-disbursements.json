@@ -1041,5 +1041,128 @@
         }
       ]
     }
+  },
+  {
+    "id": "mqujz6dqxedr",
+    "savedAt": "2026-06-26T06:31:30.062Z",
+    "data": {
+      "fields": [
+        {
+          "label": "LOC - LF Account",
+          "value": "Exim 190 Millions"
+        },
+        {
+          "label": "Disbursement Status",
+          "value": "Draft"
+        },
+        {
+          "label": "Project Reference",
+          "value": "LOC/Disb12/MEL/12"
+        },
+        {
+          "label": "Invoice Reference",
+          "value": "1PA E20& IPA E21"
+        },
+        {
+          "label": "Loan Facility Account",
+          "value": "MEL02-01"
+        },
+        {
+          "label": "Borrower Name",
+          "value": "Metro Express Ltd"
+        },
+        {
+          "label": "Disbursement Date",
+          "value": "2023-07-18"
+        },
+        {
+          "label": "Amount Disbursed",
+          "value": "1468605"
+        },
+        {
+          "label": "Payment Authorisation Reference",
+          "value": "GOILOC-240(13)"
+        },
+        {
+          "label": "Date Of Call For RPS",
+          "value": "18-Jul-2023"
+        },
+        {
+          "label": "RPS Amount",
+          "value": "1,468,605"
+        },
+        {
+          "label": "SAGE Description",
+          "value": ""
+        }
+      ],
+      "crudTables": [
+        {
+          "title": "Saved Submissions",
+          "headers": [
+            "#",
+            "Saved At",
+            "Summary"
+          ],
+          "rows": [
+            [
+              "1",
+              "25 Jun 2026 13:26",
+              "Exim 500 Millions | LOC/Disb1/MEL/01 | IPA E06,E07,E08"
+            ],
+            [
+              "2",
+              "25 Jun 2026 15:48",
+              "Exim 500 Millions | LOC/Disb2/MEL/02 | IPA E09"
+            ],
+            [
+              "3",
+              "25 Jun 2026 15:53",
+              "Exim 190 Millions | LOC/Disb3/MEL/03 | 1PA E10"
+            ],
+            [
+              "4",
+              "25 Jun 2026 15:57",
+              "Exim 190 Millions | LOC/Disb4/MEL/04 | IPA-E11"
+            ],
+            [
+              "5",
+              "25 Jun 2026 16:01",
+              "Exim 190 Millions | LOC/Disb5/MEL/05 | IPA-E12"
+            ],
+            [
+              "6",
+              "25 Jun 2026 16:05",
+              "Exim 190 Millions  | LOC/Disb6/MEL/06 | IPA-E13"
+            ],
+            [
+              "7",
+              "25 Jun 2026 16:11",
+              "Exim 190 Millions | LOC/Disb7/MEL/07 | IPA E14"
+            ],
+            [
+              "8",
+              "25 Jun 2026 16:20",
+              "Exim 190 Millions | LOC/Disb8/MEL/08 | IPA-E15"
+            ],
+            [
+              "9",
+              "25 Jun 2026 16:23",
+              "Exim 190 Millions  | LOC/Disb9Mel/09 | IPA-E16"
+            ],
+            [
+              "10",
+              "25 Jun 2026 16:25",
+              "Exim 190 Millions | LOC/Disb10MEL/10 | IPA-E17"
+            ],
+            [
+              "11",
+              "26 Jun 2026 10:18",
+              "Exim 190 Millions | LOC/Disb11/MEL/02 | IPA-E18 & IPA-E19"
+            ]
+          ]
+        }
+      ]
+    }
   }
 ]
