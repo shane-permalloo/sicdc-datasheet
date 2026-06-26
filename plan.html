@@ -189,6 +189,22 @@
     width: 118px;
     accent-color: var(--accent);
   }
+  .settings-action {
+    width: 100%;
+    margin-top: 16px;
+    border: 1px solid var(--accent);
+    background: var(--accent);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: .84rem;
+    font-weight: 700;
+    padding: 9px 12px;
+    border-radius: 7px;
+    cursor: pointer;
+  }
+  .settings-action:hover {
+    filter: brightness(1.05);
+  }
 
   /* ── LEGEND ─────────────────────────────────────────── */
   #legend {
@@ -412,6 +428,198 @@
     box-shadow: 0 0 8px var(--accent-glow);
     z-index: 20; pointer-events: none;
   }
+  #print-report {
+    display: none;
+  }
+
+  @media print {
+    @page {
+      size: A4 portrait;
+      margin: 12mm;
+    }
+
+    :root,
+    :root.light {
+      --print-text: #0f172a;
+      --print-muted: #475569;
+      --print-border: #d8e0eb;
+      --print-soft: #f5f7fb;
+      --print-accent: #2563eb;
+    }
+
+    html,
+    body {
+      width: auto;
+      height: auto;
+      overflow: visible;
+      background: #ffffff;
+      color: var(--print-text);
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+
+    #topbar,
+    #legend,
+    #scroll-wrap {
+      display: none !important;
+    }
+
+    #print-report {
+      display: block;
+      font-size: 10px;
+      line-height: 1.35;
+    }
+
+    .print-cover {
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--print-accent);
+      margin-bottom: 14px;
+    }
+
+    .print-kicker {
+      margin-bottom: 4px;
+      color: var(--print-accent);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .print-title {
+      margin-bottom: 5px;
+      font-size: 22px;
+      line-height: 1.1;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .print-subtitle {
+      color: var(--print-muted);
+      font-size: 10.5px;
+    }
+
+    .print-summary {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .print-card {
+      min-height: 54px;
+      padding: 9px;
+      border: 1px solid var(--print-border);
+      border-radius: 8px;
+      background: var(--print-soft);
+    }
+
+    .print-card-label {
+      margin-bottom: 5px;
+      color: var(--print-muted);
+      font-size: 7.5px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .print-card-value {
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .print-section-title {
+      margin: 14px 0 7px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--print-text);
+    }
+
+    .print-project-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 10px;
+      margin-bottom: 12px;
+      padding: 10px;
+      border: 1px solid var(--print-border);
+      border-radius: 8px;
+    }
+
+    .print-field-label {
+      color: var(--print-muted);
+      font-size: 7.5px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .print-field-value {
+      margin-top: 2px;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .print-task-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    .print-task-table th,
+    .print-task-table td {
+      padding: 6px 5px;
+      border-bottom: 1px solid var(--print-border);
+      vertical-align: top;
+      text-align: left;
+    }
+
+    .print-task-table th {
+      background: var(--print-soft);
+      color: var(--print-muted);
+      font-size: 7.5px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .print-task-table tr {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .print-task-main {
+      font-weight: 800;
+    }
+
+    .print-task-description {
+      margin-top: 3px;
+      color: var(--print-muted);
+      font-size: 8.5px;
+    }
+
+    .print-pill {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: #e8f0ff;
+      color: #1d4ed8;
+      font-size: 7.5px;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .print-muted {
+      color: var(--print-muted);
+    }
+
+    .print-footer {
+      margin-top: 12px;
+      padding-top: 8px;
+      border-top: 1px solid var(--print-border);
+      color: var(--print-muted);
+      font-size: 8px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -450,6 +658,7 @@
         </span>
         <input id="settingHideDescriptions" type="checkbox">
       </label>
+      <button class="settings-action" id="exportPdfBtn" type="button">Export Printable PDF</button>
     </div>
   </div>
 </div>
@@ -469,6 +678,8 @@
 <div id="scroll-wrap">
   <div id="gantt"></div>
 </div>
+
+<section id="print-report" aria-label="Printable project plan report"></section>
 
 <script>
 // ── DATA ─────────────────────────────────────────────────
@@ -798,6 +1009,8 @@ const densityInput = document.getElementById('settingDensity');
 const paddingValue = document.getElementById('paddingValue');
 const hideWeekendsInput = document.getElementById('settingHideWeekends');
 const hideDescriptionsInput = document.getElementById('settingHideDescriptions');
+const exportPdfBtn = document.getElementById('exportPdfBtn');
+const printReport = document.getElementById('print-report');
 
 function saveSettings() {
   try {
@@ -849,6 +1062,96 @@ function buildMonthGroups(days) {
 }
 
 // ── ROW 1: Month headers ──────────────────────────────────
+function formatDisplayDate(value) {
+  const date = value instanceof Date ? value : parseDate(value);
+  return date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
+function appendText(parent, tagName, className, text) {
+  const el = document.createElement(tagName);
+  if (className) el.className = className;
+  el.textContent = text;
+  parent.appendChild(el);
+  return el;
+}
+
+function buildPrintableReport() {
+  const taskById = new Map(TASKS.map(task => [task.id, task]));
+  const projectStart = formatDisplayDate(PROJECT.startDate);
+  const projectEnd = formatDisplayDate(new Date(Math.max(...TASKS.map(task => task.endDate))));
+
+  printReport.replaceChildren();
+
+  const cover = document.createElement('header');
+  cover.className = 'print-cover';
+  appendText(cover, 'div', 'print-kicker', 'SICDC LRPSMS');
+  appendText(cover, 'h1', 'print-title', 'Project Rollout Plan');
+  appendText(cover, 'div', 'print-subtitle', `Printable project and task definition report · Updated ${PROJECT.updatedLabel}`);
+  printReport.appendChild(cover);
+
+  const summary = document.createElement('section');
+  summary.className = 'print-summary';
+  [
+    ['Project Start', projectStart],
+    ['Projected Finish', projectEnd],
+    ['Schedule Mode', PROJECT.useBusinessDays ? 'Business days' : 'Calendar days'],
+    ['Task Count', `${TASKS.length} tasks`],
+  ].forEach(([label, value]) => {
+    const card = document.createElement('div');
+    card.className = 'print-card';
+    appendText(card, 'div', 'print-card-label', label);
+    appendText(card, 'div', 'print-card-value', value);
+    summary.appendChild(card);
+  });
+  printReport.appendChild(summary);
+
+  appendText(printReport, 'h2', 'print-section-title', 'Task Definitions');
+  const table = document.createElement('table');
+  table.className = 'print-task-table';
+
+  const colGroup = document.createElement('colgroup');
+  ['22%', '45%', '17%', '16%'].forEach(width => {
+    const col = document.createElement('col');
+    col.style.width = width;
+    colGroup.appendChild(col);
+  });
+  table.appendChild(colGroup);
+
+  const thead = document.createElement('thead');
+  const headRow = document.createElement('tr');
+  ['Workstream', 'Task', 'Team', 'Schedule'].forEach(label => {
+    appendText(headRow, 'th', '', label);
+  });
+  thead.appendChild(headRow);
+  table.appendChild(thead);
+
+  const tbody = document.createElement('tbody');
+  TASK_DEFINITIONS.forEach(definition => {
+    const resolved = taskById.get(definition.id);
+    const row = document.createElement('tr');
+
+    const streamCell = document.createElement('td');
+    appendText(streamCell, 'span', 'print-pill', definition.workstream);
+    row.appendChild(streamCell);
+
+    const taskCell = document.createElement('td');
+    appendText(taskCell, 'div', 'print-task-main', definition.task);
+    if (definition.description) appendText(taskCell, 'div', 'print-task-description', definition.description);
+    row.appendChild(taskCell);
+
+    appendText(row, 'td', '', definition.team || '-');
+
+    const scheduleCell = document.createElement('td');
+    appendText(scheduleCell, 'div', '', resolved ? formatDisplayDate(resolved.start) : '-');
+    appendText(scheduleCell, 'div', 'print-muted', resolved ? `to ${formatDisplayDate(resolved.end)}` : '');
+    row.appendChild(scheduleCell);
+
+    tbody.appendChild(row);
+  });
+  table.appendChild(tbody);
+  printReport.appendChild(table);
+}
+
 function renderGantt(options = {}) {
 const previousScrollLeft = wrap.scrollLeft;
 const days = visibleProjectDays();
@@ -1069,8 +1372,21 @@ hideDescriptionsInput.addEventListener('change', () => {
   renderGantt();
 });
 
+exportPdfBtn.addEventListener('click', () => {
+  const previousTitle = document.title;
+  settingsPanel.hidden = true;
+  settingsToggle.setAttribute('aria-expanded', 'false');
+  buildPrintableReport();
+  document.title = `SICDC LRPSMS Printable Project Plan - ${PROJECT.updatedLabel}`;
+  setTimeout(() => {
+    window.print();
+    document.title = previousTitle;
+  }, 50);
+});
+
 applySettings();
 renderGantt({ scrollToToday: true });
+buildPrintableReport();
 </script>
 </body>
 </html>
