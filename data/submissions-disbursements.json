@@ -9215,7 +9215,7 @@
   },
   {
     "id": "mqz3r6mb2imr",
-    "savedAt": "2026-06-29T10:56:14.147Z",
+    "savedAt": "2026-06-29T11:00:03.271Z",
     "data": {
       "fields": [
         {
@@ -9515,6 +9515,11 @@
               "48",
               "29 Jun 2026 14:54",
               "Exim 500 Millions | LOC/Disb2/MOA-NANL(PMC)/2 | NBCC/Mauritius/NANL/02"
+            ],
+            [
+              "49",
+              "29 Jun 2026 14:56",
+              "Exim 500 Millions | LOC/Disb12/NHDC/12 | RA-28R"
             ]
           ]
         }
