@@ -8028,7 +8028,7 @@
   },
   {
     "id": "mqz3ieaaiaq9",
-    "savedAt": "2026-06-29T10:49:24.178Z",
+    "savedAt": "2026-06-29T10:51:32.282Z",
     "data": {
       "fields": [
         {
@@ -8308,6 +8308,11 @@
               "44",
               "29 Jun 2026 14:47",
               "LOC/Disb1/MOLG-FFV/1 | NFFC/EXP/081-2021/PI-024 | MOLG-FFV-01"
+            ],
+            [
+              "45",
+              "29 Jun 2026 14:49",
+              "Exim 500 Millions | LOC/Disb1/MOLG-FFV/1 | NFFC/EXP/081-2021/PI-023"
             ]
           ]
         }
