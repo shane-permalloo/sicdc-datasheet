@@ -13767,7 +13767,7 @@
   },
   {
     "id": "mr0b8xcbn0a1",
-    "savedAt": "2026-06-30T07:13:45.419Z",
+    "savedAt": "2026-06-30T09:49:41.669Z",
     "data": {
       "fields": [
         {
@@ -14087,6 +14087,11 @@
               "52",
               "29 Jun 2026 15:25",
               "Exim 500 Millions | LOC/Disb14/NHDC/14 | RA-30R"
+            ],
+            [
+              "53",
+              "30 Jun 2026 11:13",
+              "Exim 500 Millions | LOC/Disb2MOLG-FFV/45 | NFF/EXP/2122040"
             ]
           ]
         }
