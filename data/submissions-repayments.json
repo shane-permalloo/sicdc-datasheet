@@ -1,1 +1,51 @@
-[]
+[
+  {
+    "id": "mr4k4j54lqe7",
+    "savedAt": "2026-07-03T06:33:21.640Z",
+    "data": {
+      "fields": [
+        {
+          "label": "LOC - LF Account",
+          "value": "Exim 190 Millions"
+        },
+        {
+          "label": "Repayment Status",
+          "value": "Draft"
+        },
+        {
+          "label": "Repayment Type",
+          "value": "Commitment Fee Repayment"
+        },
+        {
+          "label": "EXIM Claim Reference No",
+          "value": "GOILOC-240/E-AF-MUS-/2005"
+        },
+        {
+          "label": "Loan Facility Account Number",
+          "value": "MEL02-02"
+        },
+        {
+          "label": "Repayment Amount",
+          "value": "103795.25"
+        },
+        {
+          "label": "Repayment Date",
+          "value": "2022-12-27"
+        },
+        {
+          "label": "Repayment Due Date Paid For",
+          "value": "2022-11-18"
+        },
+        {
+          "label": "Arrears",
+          "value": ""
+        },
+        {
+          "label": "Surplus",
+          "value": ""
+        }
+      ],
+      "crudTables": []
+    }
+  }
+]
