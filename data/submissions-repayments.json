@@ -1990,7 +1990,7 @@
   },
   {
     "id": "mr91jgmc17bp",
-    "savedAt": "2026-07-06T09:51:56.388Z",
+    "savedAt": "2026-07-06T09:55:26.390Z",
     "data": {
       "fields": [
         {
@@ -2011,11 +2011,11 @@
         },
         {
           "label": "Loan Facility Account Number",
-          "value": "MOLG-INC-01"
+          "value": "PMO-MDFA-01"
         },
         {
           "label": "Repayment Amount",
-          "value": "2713.33"
+          "value": "1228.36"
         },
         {
           "label": "Repayment Date",
@@ -2136,6 +2136,11 @@
             [
               "19",
               "06 Jul 2026 13:47",
+              "Exim 190 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2655"
+            ],
+            [
+              "20",
+              "06 Jul 2026 13:51",
               "Exim 190 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2655"
             ]
           ]
