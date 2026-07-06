@@ -3377,5 +3377,200 @@
         }
       ]
     }
+  },
+  {
+    "id": "mr924a2wbovm",
+    "savedAt": "2026-07-06T10:08:07.688Z",
+    "data": {
+      "fields": [
+        {
+          "label": "LOC - LF Account",
+          "value": "Exim 190 Millions"
+        },
+        {
+          "label": "Repayment Status",
+          "value": "Draft"
+        },
+        {
+          "label": "Repayment Type",
+          "value": "Commitment Fee Repayment"
+        },
+        {
+          "label": "EXIM Claim Reference No",
+          "value": "GOILOC-240/E-AF-MUS/1962"
+        },
+        {
+          "label": "Loan Facility Account Number",
+          "value": "MOLG-INC-01"
+        },
+        {
+          "label": "Repayment Amount",
+          "value": "2066.78"
+        },
+        {
+          "label": "Repayment Date",
+          "value": ""
+        },
+        {
+          "label": "Repayment Due Date Paid For",
+          "value": "2022-08-28"
+        },
+        {
+          "label": "Arrears",
+          "value": ""
+        },
+        {
+          "label": "Surplus",
+          "value": ""
+        }
+      ],
+      "crudTables": [
+        {
+          "title": "Saved Submissions",
+          "headers": [
+            "#",
+            "Saved At",
+            "Summary"
+          ],
+          "rows": [
+            [
+              "1",
+              "03 Jul 2026 10:33",
+              "Exim 190 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS-/2005"
+            ],
+            [
+              "2",
+              "03 Jul 2026 10:38",
+              "Exim 190 Millions | RPS Repayment | GOILOC-240/E-AF-MUS-/2005"
+            ],
+            [
+              "3",
+              "03 Jul 2026 10:40",
+              "Exim 190 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS-/156"
+            ],
+            [
+              "4",
+              "03 Jul 2026 10:43",
+              "Exim 190 Millions | RPS Repayment | GOILOC-240/E-AF-MUS-/156"
+            ],
+            [
+              "5",
+              "03 Jul 2026 10:46",
+              "Exim 190 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS-/1682"
+            ],
+            [
+              "6",
+              "03 Jul 2026 10:50",
+              "Exim 190 Millions | RPS Repayment | GOILOC-240/E-AF-MUS-/1682"
+            ],
+            [
+              "7",
+              "03 Jul 2026 10:51",
+              "Exim 190 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS-/188"
+            ],
+            [
+              "8",
+              "03 Jul 2026 10:53",
+              "Exim 190 Millions | RPS Repayment | GOILOC-240/E-AF-MUS-/188"
+            ],
+            [
+              "9",
+              "06 Jul 2026 12:36",
+              "Exim 190 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+            ],
+            [
+              "10",
+              "06 Jul 2026 12:37",
+              "Exim 190 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+            ],
+            [
+              "11",
+              "06 Jul 2026 12:39",
+              "Exim 190 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/1145"
+            ],
+            [
+              "12",
+              "06 Jul 2026 12:39",
+              "Exim 190 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+            ],
+            [
+              "13",
+              "06 Jul 2026 12:41",
+              "Exim 190 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+            ],
+            [
+              "14",
+              "06 Jul 2026 12:42",
+              "Exim 190 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+            ],
+            [
+              "15",
+              "06 Jul 2026 12:42",
+              "Exim 190 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+            ],
+            [
+              "16",
+              "06 Jul 2026 12:43",
+              "Exim 190 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+            ],
+            [
+              "17",
+              "06 Jul 2026 12:45",
+              "Exim 190 Millions | Commitment Fee Repayment | Commitment Fee Repayment"
+            ],
+            [
+              "18",
+              "06 Jul 2026 12:46",
+              "Exim 190 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2655"
+            ],
+            [
+              "19",
+              "06 Jul 2026 13:47",
+              "Exim 190 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2655"
+            ],
+            [
+              "20",
+              "06 Jul 2026 13:57",
+              "Exim 190 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2655"
+            ],
+            [
+              "21",
+              "06 Jul 2026 13:58",
+              "Exim 190 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2655"
+            ],
+            [
+              "22",
+              "06 Jul 2026 14:00",
+              "Exim 190 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2655"
+            ],
+            [
+              "23",
+              "06 Jul 2026 14:01",
+              "Exim 190 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2655"
+            ],
+            [
+              "24",
+              "06 Jul 2026 14:02",
+              "Exim 190 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2655"
+            ],
+            [
+              "25",
+              "06 Jul 2026 14:04",
+              "Exim 190 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2655"
+            ],
+            [
+              "26",
+              "06 Jul 2026 14:05",
+              "Exim 190 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/1962"
+            ],
+            [
+              "27",
+              "06 Jul 2026 14:07",
+              "Exim 190 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/1962"
+            ]
+          ]
+        }
+      ]
+    }
   }
 ]
