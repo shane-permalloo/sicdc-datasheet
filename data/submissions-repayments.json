@@ -811,12 +811,12 @@
   },
   {
     "id": "mr8z2shuprdv",
-    "savedAt": "2026-07-14T06:11:35.565Z",
+    "savedAt": "2026-07-14T06:30:59.298Z",
     "data": {
       "fields": [
         {
           "label": "LOC - LF Account",
-          "value": "Exim 375 Millions"
+          "value": "Exim 500 Millions"
         },
         {
           "label": "Repayment Status",
@@ -866,37 +866,37 @@
           "rows": [
             [
               "1",
-              "14 Jul 2026 09:59",
-              "Exim 375 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+              "14 Jul 2026 10:28",
+              "Exim 500 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
             ],
             [
               "2",
-              "14 Jul 2026 10:07",
-              "Exim 375 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+              "14 Jul 2026 10:28",
+              "Exim 500 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
             ],
             [
               "3",
-              "14 Jul 2026 10:06",
-              "Exim 375 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/1145"
+              "14 Jul 2026 10:29",
+              "Exim 500 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/1145"
             ],
             [
               "4",
-              "14 Jul 2026 10:04",
-              "Exim 375 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+              "14 Jul 2026 10:29",
+              "Exim 500 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
             ],
             [
               "5",
-              "14 Jul 2026 10:04",
-              "Exim 375 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+              "14 Jul 2026 10:29",
+              "Exim 500 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
             ],
             [
               "6",
-              "14 Jul 2026 10:09",
-              "Exim 375 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+              "14 Jul 2026 10:30",
+              "Exim 500 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
             ],
             [
               "7",
-              "14 Jul 2026 10:05",
+              "14 Jul 2026 10:11",
               "Exim 375 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
             ],
             [
@@ -908,6 +908,36 @@
               "9",
               "14 Jul 2026 10:04",
               "Exim 375 Millions | Commitment Fee Repayment | Commitment Fee Repayment"
+            ],
+            [
+              "10",
+              "14 Jul 2026 10:14",
+              "Exim 375 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+            ],
+            [
+              "11",
+              "14 Jul 2026 10:15",
+              "Exim 375 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+            ],
+            [
+              "12",
+              "14 Jul 2026 10:17",
+              "Exim 375 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+            ],
+            [
+              "13",
+              "14 Jul 2026 10:18",
+              "Exim 375 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+            ],
+            [
+              "14",
+              "14 Jul 2026 10:21",
+              "Exim 375 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+            ],
+            [
+              "15",
+              "14 Jul 2026 10:22",
+              "Exim 375 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
             ]
           ]
         }
