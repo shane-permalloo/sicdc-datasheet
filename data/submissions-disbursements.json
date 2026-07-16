@@ -28542,7 +28542,7 @@
   },
   {
     "id": "mrna4qijjenl",
-    "savedAt": "2026-07-16T09:01:12.379Z",
+    "savedAt": "2026-07-16T09:08:41.748Z",
     "data": {
       "fields": [
         {
@@ -28962,6 +28962,11 @@
               "72",
               "02 Jul 2026 09:13",
               "Exim 500 Millions | LOC/Disb45MOLG-FFV/2 | NFF/EXP/2122040"
+            ],
+            [
+              "73",
+              "16 Jul 2026 13:01",
+              "Exim 500 Million | LOC/Disb57/Metro Express Ltd/22 | IPA 48"
             ]
           ]
         }
