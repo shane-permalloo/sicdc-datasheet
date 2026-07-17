@@ -2298,5 +2298,150 @@
         }
       ]
     }
+  },
+  {
+    "id": "mrom27jzuiex",
+    "savedAt": "2026-07-17T07:22:56.063Z",
+    "data": {
+      "fields": [
+        {
+          "label": "LOC - LF Account",
+          "value": "Exim 500 Million"
+        },
+        {
+          "label": "Repayment Status",
+          "value": "Draft"
+        },
+        {
+          "label": "Repayment Type",
+          "value": "Commitment Fee Repayment"
+        },
+        {
+          "label": "EXIM Claim Reference No",
+          "value": "GOILOC-240/E-AF-MUS/2655"
+        },
+        {
+          "label": "Loan Facility Account Number",
+          "value": "MOLG-INC-01"
+        },
+        {
+          "label": "Repayment Amount",
+          "value": "2713.33"
+        },
+        {
+          "label": "Repayment Date",
+          "value": "2022-03-24"
+        },
+        {
+          "label": "Repayment Due Date Paid For",
+          "value": "2022-02-27"
+        },
+        {
+          "label": "Arrears",
+          "value": ""
+        },
+        {
+          "label": "Surplus",
+          "value": ""
+        }
+      ],
+      "crudTables": [
+        {
+          "title": "Saved Submissions",
+          "headers": [
+            "#",
+            "Saved At",
+            "Summary"
+          ],
+          "rows": [
+            [
+              "1",
+              "14 Jul 2026 10:28",
+              "Exim 500 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+            ],
+            [
+              "2",
+              "14 Jul 2026 10:28",
+              "Exim 500 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+            ],
+            [
+              "3",
+              "14 Jul 2026 10:29",
+              "Exim 500 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/1145"
+            ],
+            [
+              "4",
+              "14 Jul 2026 10:29",
+              "Exim 500 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+            ],
+            [
+              "5",
+              "14 Jul 2026 10:29",
+              "Exim 500 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+            ],
+            [
+              "6",
+              "14 Jul 2026 10:30",
+              "Exim 500 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+            ],
+            [
+              "7",
+              "14 Jul 2026 10:30",
+              "Exim 500 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+            ],
+            [
+              "8",
+              "14 Jul 2026 10:31",
+              "Exim 500 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+            ],
+            [
+              "9",
+              "14 Jul 2026 10:40",
+              "Exim 500 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+            ],
+            [
+              "10",
+              "14 Jul 2026 10:32",
+              "Exim 500 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+            ],
+            [
+              "11",
+              "14 Jul 2026 10:32",
+              "Exim 500 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+            ],
+            [
+              "12",
+              "14 Jul 2026 10:33",
+              "Exim 500 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+            ],
+            [
+              "13",
+              "14 Jul 2026 10:33",
+              "Exim 500 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+            ],
+            [
+              "14",
+              "14 Jul 2026 10:33",
+              "Exim 500 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+            ],
+            [
+              "15",
+              "14 Jul 2026 10:36",
+              "Exim 500 Millions | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2702"
+            ],
+            [
+              "16",
+              "17 Jul 2026 11:17",
+              "Exim 500 Million | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2655"
+            ],
+            [
+              "17",
+              "17 Jul 2026 11:18",
+              "Exim 500 Million | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/2655"
+            ]
+          ]
+        }
+      ]
+    }
   }
 ]
