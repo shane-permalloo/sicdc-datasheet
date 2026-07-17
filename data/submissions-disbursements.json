@@ -289,5 +289,93 @@
         }
       ]
     }
+  },
+  {
+    "id": "mrox0ao4cjmc",
+    "savedAt": "2026-07-17T12:29:22.564Z",
+    "data": {
+      "fields": [
+        {
+          "label": "LOC - LF Account",
+          "value": "Exim 500 Millions"
+        },
+        {
+          "label": "Disbursement Status",
+          "value": "Draft"
+        },
+        {
+          "label": "Project Reference",
+          "value": "LOC/Disb58/PUMP/03"
+        },
+        {
+          "label": "Invoice Reference",
+          "value": "NFF/EXP/2122040"
+        },
+        {
+          "label": "Loan Facility Account",
+          "value": "MOLG-PUMP-01"
+        },
+        {
+          "label": "Borrower Name",
+          "value": "Government of Mauritius"
+        },
+        {
+          "label": "Disbursement Date",
+          "value": "2022-02-04"
+        },
+        {
+          "label": "Amount Disbursed",
+          "value": "140159.10"
+        },
+        {
+          "label": "Payment Authorisation Reference",
+          "value": "GOILOC-240(8)"
+        },
+        {
+          "label": "Date Of Call For RPS",
+          "value": "04-Feb-2022"
+        },
+        {
+          "label": "RPS Amount",
+          "value": "140,159"
+        },
+        {
+          "label": "SAGE Description",
+          "value": ""
+        }
+      ],
+      "crudTables": [
+        {
+          "title": "Saved Submissions",
+          "headers": [
+            "#",
+            "Saved At",
+            "Summary"
+          ],
+          "rows": [
+            [
+              "1",
+              "17 Jul 2026 15:29",
+              "—"
+            ],
+            [
+              "2",
+              "17 Jul 2026 15:38",
+              "Exim 190 Millions | LOC/Disb1/MEL/01 | IPA E06,E07,E08"
+            ],
+            [
+              "3",
+              "17 Jul 2026 15:42",
+              "Exim 190 Millions | LOC/Disb2/MEL/02 | IPA E09"
+            ],
+            [
+              "4",
+              "17 Jul 2026 16:27",
+              "Exim 500 | LOC/Disb57/Metro Express Ltd/22 | IPA 48"
+            ]
+          ]
+        }
+      ]
+    }
   }
 ]
