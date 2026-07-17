@@ -55,5 +55,78 @@
       ],
       "crudTables": []
     }
+  },
+  {
+    "id": "mrov79rhfcno",
+    "savedAt": "2026-07-17T11:38:48.749Z",
+    "data": {
+      "fields": [
+        {
+          "label": "LOC - LF Account",
+          "value": "Exim 190 Millions"
+        },
+        {
+          "label": "Disbursement Status",
+          "value": "Draft"
+        },
+        {
+          "label": "Project Reference",
+          "value": "LOC/Disb1/MEL/01"
+        },
+        {
+          "label": "Invoice Reference",
+          "value": "IPA E06,E07,E08"
+        },
+        {
+          "label": "Loan Facility Account",
+          "value": "MEL02-02"
+        },
+        {
+          "label": "Borrower Name",
+          "value": "Metro Express Ltd"
+        },
+        {
+          "label": "Disbursement Date",
+          "value": "2022-05-18"
+        },
+        {
+          "label": "Amount Disbursed",
+          "value": "8283125"
+        },
+        {
+          "label": "Payment Authorisation Reference",
+          "value": "GOILOC-240(13)"
+        },
+        {
+          "label": "Date Of Call For RPS",
+          "value": "18-May-2022"
+        },
+        {
+          "label": "RPS Amount",
+          "value": "8,283,125"
+        },
+        {
+          "label": "SAGE Description",
+          "value": ""
+        }
+      ],
+      "crudTables": [
+        {
+          "title": "Saved Submissions",
+          "headers": [
+            "#",
+            "Saved At",
+            "Summary"
+          ],
+          "rows": [
+            [
+              "1",
+              "17 Jul 2026 15:29",
+              "—"
+            ]
+          ]
+        }
+      ]
+    }
   }
 ]
