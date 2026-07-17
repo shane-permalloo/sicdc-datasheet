@@ -4576,12 +4576,12 @@
   },
   {
     "id": "mrotk07idyh4",
-    "savedAt": "2026-07-17T10:52:43.662Z",
+    "savedAt": "2026-07-17T11:24:12.687Z",
     "data": {
       "fields": [
         {
           "label": "LOC - LF Account",
-          "value": "Commitment Fee Repayment"
+          "value": "EXIM 500 Million"
         },
         {
           "label": "Repayment Status",
@@ -4778,6 +4778,11 @@
               "30",
               "17 Jul 2026 14:50",
               "Exim 500 Million | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/1962"
+            ],
+            [
+              "31",
+              "17 Jul 2026 14:52",
+              "Commitment Fee Repayment | Commitment Fee Repayment | GOILOC-240/E-AF-MUS/1962"
             ]
           ]
         }
