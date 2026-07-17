@@ -128,5 +128,83 @@
         }
       ]
     }
+  },
+  {
+    "id": "mrovbnwo3qjh",
+    "savedAt": "2026-07-17T11:42:13.704Z",
+    "data": {
+      "fields": [
+        {
+          "label": "LOC - LF Account",
+          "value": "Exim 190 Millions"
+        },
+        {
+          "label": "Disbursement Status",
+          "value": "Draft"
+        },
+        {
+          "label": "Project Reference",
+          "value": "LOC/Disb2/MEL/02"
+        },
+        {
+          "label": "Invoice Reference",
+          "value": "IPA E09"
+        },
+        {
+          "label": "Loan Facility Account",
+          "value": "MEL02-02"
+        },
+        {
+          "label": "Borrower Name",
+          "value": "Metro Express Ltd"
+        },
+        {
+          "label": "Disbursement Date",
+          "value": "2022-05-31"
+        },
+        {
+          "label": "Amount Disbursed",
+          "value": "5272116.00"
+        },
+        {
+          "label": "Payment Authorisation Reference",
+          "value": "GOILOC-240(13)"
+        },
+        {
+          "label": "Date Of Call For RPS",
+          "value": "31-May-2022"
+        },
+        {
+          "label": "RPS Amount",
+          "value": "5,272,116"
+        },
+        {
+          "label": "SAGE Description",
+          "value": ""
+        }
+      ],
+      "crudTables": [
+        {
+          "title": "Saved Submissions",
+          "headers": [
+            "#",
+            "Saved At",
+            "Summary"
+          ],
+          "rows": [
+            [
+              "1",
+              "17 Jul 2026 15:29",
+              "—"
+            ],
+            [
+              "2",
+              "17 Jul 2026 15:38",
+              "Exim 190 Millions | LOC/Disb1/MEL/01 | IPA E06,E07,E08"
+            ]
+          ]
+        }
+      ]
+    }
   }
 ]
