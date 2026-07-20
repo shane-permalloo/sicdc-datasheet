@@ -90,9 +90,17 @@ class SubmissionStore {
     }
     const json      = await res.json();
     this._sha       = json.sha;
-    const decoded   = decodeURIComponent(escape(atob(json.content.replace(/\n/g, ''))));
-    try   { this._cache = JSON.parse(decoded); }
-    catch { this._cache = []; }
+    
+    try {
+      const decoded   = decodeURIComponent(escape(atob(json.content.replace(/\n/g, ''))));
+      this._cache = JSON.parse(decoded);
+      console.log(`[Load] Successfully loaded ${this._cache.length} submissions from GitHub`, { filePath: this.filePath });
+    } catch (e) {
+      console.error(`[Load] JSON parse error for ${this.filePath}:`, e.message);
+      console.error('[Load] Raw content length:', json.content ? json.content.length : 'undefined');
+      this._cache = [];
+      throw new Error(`Failed to parse submissions JSON: ${e.message}`);
+    }
   }
 
   /** Commit the current cache back to GitHub. */
@@ -635,11 +643,14 @@ const SubmissionManager = {
     if (panel) panel.innerHTML = `<div style="padding:16px;color:#94a3b8;font-size:0.88rem;text-align:center;">Loading submissions...</div>`;
 
     try {
+      console.log(`[Init] Loading submissions for form: ${formKey}`);
       await this._store.load();
+      console.log(`[Init] Successfully loaded ${this._store.getAll().length} submissions`);
     } catch (e) {
+      console.error(`[Init] Failed to load submissions:`, e);
       if (panel) panel.innerHTML = `<div style="padding:16px;color:#dc2626;font-size:0.88rem;background:#fef2f2;border-radius:8px;">
-        <strong>Could not load data.</strong><br>${_escapeHtml(e.message)}<br>
-        <small>Check that the token is set correctly.</small></div>`;
+        <strong>❌ Could not load submissions.</strong><br>${_escapeHtml(e.message)}<br>
+        <small>Common issues: Not signed in, GitHub token not configured, or JSON file corrupted. Check browser console (F12) for details.</small></div>`;
       return;
     }
 
