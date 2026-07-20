@@ -75,6 +75,9 @@ class SubmissionStore {
 
   /** Fetch the file from GitHub (via proxy) and populate the cache. */
   async load() {
+    console.log(`[Load] Fetching ${this.filePath} from GitHub...`);
+    const startTime = performance.now();
+    
     const res = await fetch(this._apiBase, {
       headers: await this._getHeaders()
     });
@@ -82,6 +85,7 @@ class SubmissionStore {
       // File not yet created in repo — start with empty array
       this._cache = [];
       this._sha   = null;
+      console.log(`[Load] File does not exist yet, starting with empty array`);
       return;
     }
     if (!res.ok) {
@@ -92,6 +96,7 @@ class SubmissionStore {
     
     // Debug: log the response structure
     console.log('[Load] GitHub API response keys:', Object.keys(json));
+    console.log('[Load] File size:', json.size || 'unknown', 'bytes');
     console.log('[Load] Has content?', 'content' in json, 'sha:', json.sha);
     
     if (!json.content) {
@@ -102,9 +107,13 @@ class SubmissionStore {
     this._sha = json.sha;
     
     try {
+      console.log('[Load] Decoding base64 content...');
       const decoded = decodeURIComponent(escape(atob(json.content.replace(/\n/g, ''))));
+      console.log('[Load] Parsing JSON...');
       this._cache = JSON.parse(decoded);
-      console.log(`[Load] Successfully loaded ${this._cache.length} submissions from GitHub`, { filePath: this.filePath });
+      
+      const elapsed = (performance.now() - startTime).toFixed(1);
+      console.log(`✓ [Load] Successfully loaded ${this._cache.length} submissions from GitHub in ${elapsed}ms`, { filePath: this.filePath });
     } catch (e) {
       console.error(`[Load] JSON parse error for ${this.filePath}:`, e.message);
       console.error('[Load] Decoded content length:', decoded ? decoded.length : 'N/A');

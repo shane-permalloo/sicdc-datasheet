@@ -106,19 +106,79 @@ exports.handler = async (event) => {
 
   let res;
   if (event.httpMethod === 'GET') {
+    // First try the standard Contents API
     res = await fetch(`${githubUrl}?ref=${BRANCH}`, { headers: ghHeaders });
+    
+    // If successful, check if we got the content
+    if (res.ok) {
+      const data = await res.json();
+      
+      // If content field is missing, the file is likely too large (>1MB).
+      // Fall back to the raw content endpoint which has no size limits.
+      if (!data.content) {
+        console.log('[Proxy] File too large for Contents API, fetching from raw endpoint...');
+        const rawUrl = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/${normalised}`;
+        const rawRes = await fetch(rawUrl, {
+          headers: { Authorization: `token ${token}` }
+        });
+        
+        if (!rawRes.ok) {
+          return {
+            statusCode: rawRes.status,
+            headers:    { ...CORS, 'Content-Type': 'application/json' },
+            body:       JSON.stringify({ message: `Failed to fetch from raw endpoint: ${rawRes.statusText}` })
+          };
+        }
+        
+        // Get the raw file content and base64-encode it for consistency
+        const rawContent = await rawRes.text();
+        const encoded = Buffer.from(rawContent).toString('base64');
+        
+        // Return in the same format as Contents API so the browser code doesn't change
+        const responseBody = JSON.stringify({
+          name:    data.name || normalised.split('/').pop(),
+          path:    normalised,
+          sha:     data.sha || 'unknown',
+          size:    data.size || rawContent.length,
+          content: encoded
+        });
+        
+        return {
+          statusCode: 200,
+          headers:    { ...CORS, 'Content-Type': 'application/json' },
+          body:       responseBody
+        };
+      }
+      
+      // Otherwise, return the API response as-is
+      const responseText = await res.text();
+      return {
+        statusCode: res.status,
+        headers:    { ...CORS, 'Content-Type': 'application/json' },
+        body:       responseText
+      };
+    }
+    
+    // If the initial request failed, return the error
+    const responseText = await res.text();
+    return {
+      statusCode: res.status,
+      headers:    { ...CORS, 'Content-Type': 'application/json' },
+      body:       responseText
+    };
   } else {
+    // PUT request (write)
     res = await fetch(githubUrl, {
       method:  'PUT',
       headers: { ...ghHeaders, 'Content-Type': 'application/json' },
       body:    event.body
     });
+    
+    const responseText = await res.text();
+    return {
+      statusCode: res.status,
+      headers:    { ...CORS, 'Content-Type': 'application/json' },
+      body:       responseText
+    };
   }
-
-  const responseText = await res.text();
-  return {
-    statusCode: res.status,
-    headers:    { ...CORS, 'Content-Type': 'application/json' },
-    body:       responseText
-  };
 };
