@@ -120,16 +120,30 @@ class SubmissionStore {
     this._sha   = json.content.sha;   // update SHA for the next write
   }
 
-  /** Flush with automatic retry on SHA conflict (re-fetch, re-apply, re-commit). */
-  async _flushWithRetry(applyFn, commitMessage) {
+  /** Flush with automatic retry on SHA conflict (re-fetch, merge, re-commit). */
+  async _flushWithRetry(applyFn, commitMessage, mergeStrategy = null) {
     for (let attempt = 0; attempt < 3; attempt++) {
-      if (attempt > 0) await this.load();   // re-fetch latest before retrying
-      applyFn();                            // re-apply the change to fresh cache
+      if (attempt > 0) {
+        console.log(`[Conflict ${attempt}] Re-fetching latest data and merging...`);
+        await this.load();   // re-fetch latest before retrying
+        
+        // If a merge strategy is provided, use it to intelligently merge changes
+        if (mergeStrategy && typeof mergeStrategy === 'function') {
+          mergeStrategy(this._cache);
+        }
+      }
+      
+      applyFn();            // re-apply the change to fresh cache
+      
       try {
         await this._flush(commitMessage);
+        if (attempt > 0) {
+          console.log(`[Conflict resolved] Successfully saved after ${attempt} retry(s)`);
+        }
         return;
       } catch (e) {
         if (!e.isConflict || attempt === 2) throw e;
+        console.warn(`[SHA Conflict] Attempt ${attempt + 1} failed, retrying...`);
       }
     }
   }
@@ -145,15 +159,37 @@ class SubmissionStore {
       savedAt: new Date().toISOString(),
       data
     };
+    
+    // Merge strategy: ensure our new entry is added even if others saved concurrently
+    const mergeStrategy = (cache) => {
+      // If our entry doesn't exist in the fresh cache, add it
+      if (!cache.find(e => e.id === entry.id)) {
+        cache.push(entry);
+      }
+    };
+    
     await this._flushWithRetry(
       () => { if (!this._cache.find(e => e.id === entry.id)) this._cache.push(entry); },
-      `Add submission to ${this.filePath}`
+      `Add submission to ${this.filePath}`,
+      mergeStrategy
     );
     return entry;
   }
 
   async update(id, data) {
     let updated = null;
+    
+    // Merge strategy: preserve other entries that might have been added concurrently
+    const mergeStrategy = (cache) => {
+      // Find and update the target entry if it exists
+      const idx = cache.findIndex(s => s.id === id);
+      if (idx !== -1) {
+        cache[idx].data    = data;
+        cache[idx].savedAt = new Date().toISOString();
+        updated = cache[idx];
+      }
+    };
+    
     await this._flushWithRetry(() => {
       const idx = this._cache.findIndex(s => s.id === id);
       if (idx !== -1) {
@@ -161,14 +197,25 @@ class SubmissionStore {
         this._cache[idx].savedAt = new Date().toISOString();
         updated = this._cache[idx];
       }
-    }, `Update submission ${id} in ${this.filePath}`);
+    }, `Update submission ${id} in ${this.filePath}`, mergeStrategy);
+    
     return updated;
   }
 
   async remove(id) {
+    // Merge strategy: remove only the target entry, preserve all others
+    const mergeStrategy = (cache) => {
+      // Filter out only the entry we want to remove
+      const newCache = cache.filter(s => s.id !== id);
+      // Replace the cache contents
+      cache.length = 0;
+      cache.push(...newCache);
+    };
+    
     await this._flushWithRetry(
       () => { this._cache = this._cache.filter(s => s.id !== id); },
-      `Delete submission ${id} from ${this.filePath}`
+      `Delete submission ${id} from ${this.filePath}`,
+      mergeStrategy
     );
   }
 }
@@ -619,12 +666,22 @@ const SubmissionManager = {
   /** Re-fetch the latest data from GitHub and refresh the panel. */
   async refresh() {
     const panel = document.getElementById('submissionsPanel');
+    const countBefore = this._store.getAll().length;
+    
     if (panel) panel.innerHTML = `<div style="padding:16px;color:#94a3b8;font-size:0.88rem;text-align:center;">Refreshing…</div>`;
     try {
       await this._store.load();
+      const countAfter = this._store.getAll().length;
+      
       this._renderPanel();
+      
+      if (countAfter > countBefore) {
+        const newCount = countAfter - countBefore;
+        console.log(`[Refresh] Other users added ${newCount} submission(s). Total: ${countBefore} → ${countAfter}`);
+        alert(`ℹ️ Data refreshed.\n\nOther team members added ${newCount} submission(s) while you were working.\n\nAll entries have been preserved. Total submissions: ${countAfter}`);
+      }
     } catch (e) {
-      alert('Refresh failed: ' + e.message);
+      alert('❌ Refresh failed: ' + e.message);
       this._renderPanel();
     }
   },
@@ -637,17 +694,27 @@ const SubmissionManager = {
     };
     const saveBtn = document.getElementById('saveBtn');
     if (saveBtn) saveBtn.disabled = true;
+    
+    const countBefore = this._store.getAll().length;
+    
     try {
       if (this._editingId) {
         await this._store.update(this._editingId, data);
-        alert('Submission updated successfully.');
+        alert('✓ Submission updated successfully.');
       } else {
         const entry = await this._store.add(data);
         this._editingId = entry.id;
-        alert('Submission saved successfully.');
+        const countAfter = this._store.getAll().length;
+        
+        // Detect if other users added entries during this operation
+        if (countAfter > countBefore + 1) {
+          alert(`✓ Submission saved successfully.\n\n⚠️ Note: ${countAfter - countBefore - 1} other submission(s) were added by other users. All entries have been preserved.`);
+        } else {
+          alert('✓ Submission saved successfully.');
+        }
       }
     } catch (e) {
-      alert('Save failed: ' + e.message);
+      alert('❌ Save failed: ' + e.message);
       if (saveBtn) saveBtn.disabled = false;
       return;
     }
