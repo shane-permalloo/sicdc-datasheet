@@ -116,6 +116,16 @@ exports.handler = async (event) => {
   }
 
   const responseText = await res.text();
+  
+  // Log for debugging purposes (only if error or unexpected status)
+  if (!res.ok || res.status > 201) {
+    console.log('[GitHub Proxy] Error response:', {
+      status: res.status,
+      statusText: res.statusText,
+      bodyPreview: responseText.substring(0, 500)
+    });
+  }
+  
   return {
     statusCode: res.status,
     headers:    { ...CORS, 'Content-Type': 'application/json' },

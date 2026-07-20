@@ -88,16 +88,27 @@ class SubmissionStore {
       const err = await res.json().catch(() => ({}));
       throw new Error(`GitHub read error ${res.status}: ${err.message || res.statusText}`);
     }
-    const json      = await res.json();
-    this._sha       = json.sha;
+    const json = await res.json();
+    
+    // Debug: log the response structure
+    console.log('[Load] GitHub API response keys:', Object.keys(json));
+    console.log('[Load] Has content?', 'content' in json, 'sha:', json.sha);
+    
+    if (!json.content) {
+      console.error('[Load] Response structure:', JSON.stringify(json, null, 2).substring(0, 500));
+      throw new Error(`GitHub API did not return file content. Response: ${JSON.stringify(json).substring(0, 200)}`);
+    }
+    
+    this._sha = json.sha;
     
     try {
-      const decoded   = decodeURIComponent(escape(atob(json.content.replace(/\n/g, ''))));
+      const decoded = decodeURIComponent(escape(atob(json.content.replace(/\n/g, ''))));
       this._cache = JSON.parse(decoded);
       console.log(`[Load] Successfully loaded ${this._cache.length} submissions from GitHub`, { filePath: this.filePath });
     } catch (e) {
       console.error(`[Load] JSON parse error for ${this.filePath}:`, e.message);
-      console.error('[Load] Raw content length:', json.content ? json.content.length : 'undefined');
+      console.error('[Load] Decoded content length:', decoded ? decoded.length : 'N/A');
+      console.error('[Load] First 500 chars:', decoded ? decoded.substring(0, 500) : 'N/A');
       this._cache = [];
       throw new Error(`Failed to parse submissions JSON: ${e.message}`);
     }
