@@ -122,38 +122,14 @@ class SubmissionStore {
 
   /** Flush with automatic retry on SHA conflict (re-fetch, re-apply, re-commit). */
   async _flushWithRetry(applyFn, commitMessage) {
-    // Capture pre-write entry count to detect data loss
-    const preWriteCount = this._cache ? this._cache.length : 0;
-    
     for (let attempt = 0; attempt < 3; attempt++) {
-      if (attempt > 0) {
-        console.log(`[Conflict retry] Attempt ${attempt}: Re-fetching latest data...`);
-        await this.load();   // re-fetch latest before retrying
-      }
-      
-      applyFn();            // re-apply the change to fresh cache
-      
-      // Safety check: never write fewer entries than we had before (data loss prevention)
-      if (this._cache && this._cache.length < preWriteCount) {
-        console.error('[Data Loss Prevention] Cache has fewer entries after applyFn. Aborting write.', {
-          before: preWriteCount,
-          after: this._cache.length
-        });
-        throw new Error('Data integrity check failed: write would result in data loss');
-      }
-      
+      if (attempt > 0) await this.load();   // re-fetch latest before retrying
+      applyFn();                            // re-apply the change to fresh cache
       try {
         await this._flush(commitMessage);
-        if (attempt > 0) {
-          console.log(`[Conflict resolved] Successfully wrote after ${attempt} retry attempt(s)`);
-        }
         return;
       } catch (e) {
-        if (!e.isConflict || attempt === 2) {
-          console.error('[Write error]', e.message);
-          throw e;
-        }
-        console.warn(`[SHA Conflict] Attempt ${attempt + 1} failed. Will retry...`);
+        if (!e.isConflict || attempt === 2) throw e;
       }
     }
   }
@@ -169,31 +145,15 @@ class SubmissionStore {
       savedAt: new Date().toISOString(),
       data
     };
-    const countBefore = this._cache ? this._cache.length : 0;
-    
     await this._flushWithRetry(
-      () => { 
-        if (!this._cache.find(e => e.id === entry.id)) {
-          this._cache.push(entry); 
-        }
-      },
+      () => { if (!this._cache.find(e => e.id === entry.id)) this._cache.push(entry); },
       `Add submission to ${this.filePath}`
     );
-    
-    // Verify entry was actually added
-    const countAfter = this._cache ? this._cache.length : 0;
-    if (!this._cache.find(e => e.id === entry.id)) {
-      throw new Error('Add operation failed: entry not found in cache after write');
-    }
-    
-    console.log(`[Add] Entry added. Count: ${countBefore} → ${countAfter}`);
     return entry;
   }
 
   async update(id, data) {
     let updated = null;
-    const countBefore = this._cache ? this._cache.length : 0;
-    
     await this._flushWithRetry(() => {
       const idx = this._cache.findIndex(s => s.id === id);
       if (idx !== -1) {
@@ -202,25 +162,14 @@ class SubmissionStore {
         updated = this._cache[idx];
       }
     }, `Update submission ${id} in ${this.filePath}`);
-    
-    const countAfter = this._cache ? this._cache.length : 0;
-    if (countAfter !== countBefore) {
-      console.warn(`[Update] Entry count changed during update. Before: ${countBefore}, After: ${countAfter}`);
-    }
-    
     return updated;
   }
 
   async remove(id) {
-    const countBefore = this._cache ? this._cache.length : 0;
-    
     await this._flushWithRetry(
       () => { this._cache = this._cache.filter(s => s.id !== id); },
       `Delete submission ${id} from ${this.filePath}`
     );
-    
-    const countAfter = this._cache ? this._cache.length : 0;
-    console.log(`[Remove] Entry removed. Count: ${countBefore} → ${countAfter}`);
   }
 }
 
@@ -374,14 +323,9 @@ function _renderSubmissionsPanel(store) {
       <span style="color:#475569;">
         ${submissions.length} submission${submissions.length !== 1 ? 's' : ''}
       </span>
-      <div style="display:flex;gap:8px;align-items:center;">
-        <span style="color:#dc2626;font-size:0.75rem;font-weight:600;" title="If you see stale data or suspect concurrent edits, click Refresh">
-          ⚠️ Multiple users editing? Click Refresh
-        </span>
-        <button class="btn btn-ghost btn-sm" onclick="SubmissionManager.refresh()" title="Reload latest data from GitHub - use this if another user just added entries">
-          ↻ Refresh
-        </button>
-      </div>
+      <button class="btn btn-ghost btn-sm" onclick="SubmissionManager.refresh()" title="Reload latest data from GitHub">
+        ↻ Refresh
+      </button>
     </div>`;
 
   if (submissions.length === 0) {
@@ -677,20 +621,10 @@ const SubmissionManager = {
     const panel = document.getElementById('submissionsPanel');
     if (panel) panel.innerHTML = `<div style="padding:16px;color:#94a3b8;font-size:0.88rem;text-align:center;">Refreshing…</div>`;
     try {
-      const countBefore = this._store.getAll().length;
       await this._store.load();
-      const countAfter = this._store.getAll().length;
-      
-      if (countAfter !== countBefore) {
-        console.log(`[Refresh] Data updated. Submissions: ${countBefore} → ${countAfter}`);
-        if (countAfter > countBefore) {
-          alert(`ℹ️ New submissions were added by other users.\n\nSubmissions: ${countBefore} → ${countAfter}`);
-        }
-      }
-      
       this._renderPanel();
     } catch (e) {
-      alert('❌ Refresh failed: ' + e.message);
+      alert('Refresh failed: ' + e.message);
       this._renderPanel();
     }
   },
@@ -706,21 +640,14 @@ const SubmissionManager = {
     try {
       if (this._editingId) {
         await this._store.update(this._editingId, data);
-        alert('✓ Submission updated successfully.');
+        alert('Submission updated successfully.');
       } else {
         const entry = await this._store.add(data);
         this._editingId = entry.id;
-        alert('✓ Submission saved successfully.');
+        alert('Submission saved successfully.');
       }
     } catch (e) {
-      const msg = e.message || 'Unknown error';
-      if (msg.includes('conflict') || msg.includes('Conflict')) {
-        alert('⚠️ Save conflict detected!\n\nAnother user was editing at the same time. The system has merged the changes, but please review the Saved Submissions list to verify your data is correct.\n\nError: ' + msg);
-      } else if (msg.includes('Data integrity') || msg.includes('data loss')) {
-        alert('🔴 CRITICAL: ' + msg + '\n\nThis operation would have deleted existing entries. The save has been blocked. Please refresh the page and try again.');
-      } else {
-        alert('❌ Save failed: ' + msg);
-      }
+      alert('Save failed: ' + e.message);
       if (saveBtn) saveBtn.disabled = false;
       return;
     }
