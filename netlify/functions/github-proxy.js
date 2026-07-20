@@ -150,12 +150,12 @@ exports.handler = async (event) => {
         };
       }
       
-      // Otherwise, return the API response as-is
-      const responseText = await res.text();
+      // For smaller files that have content, return the API response as-is
+      // (already parsed as JSON, so stringify it back)
       return {
         statusCode: res.status,
         headers:    { ...CORS, 'Content-Type': 'application/json' },
-        body:       responseText
+        body:       JSON.stringify(data)
       };
     }
     
