@@ -493,21 +493,8 @@ function _generateWordDoc(store, formTitle, fileName, formHtmlFile) {
     spacing: { after: 100 }
   }));
 
-  children.push(new Paragraph({
-    children: [new TextRun({
-      text: 'Generated: ' + new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
-        + '  |  Total submissions: ' + submissions.length,
-      italics: true, color: '888888', size: 18, font: 'Calibri'
-    })],
-    spacing: { after: 400 }
-  }));
-
   // Each submission as its own block
   submissions.forEach((sub, idx) => {
-    const date = new Date(sub.savedAt);
-    const dateStr = date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
-      + ' ' + date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-
     // Section heading with separator
     if (idx > 0) {
       children.push(new Paragraph({
@@ -518,42 +505,19 @@ function _generateWordDoc(store, formTitle, fileName, formHtmlFile) {
 
     children.push(new Paragraph({
       children: [new TextRun({
-        text: `Submission #${idx + 1}  —  ${dateStr}`,
+        text: `Submission #${idx + 1}`,
         bold: true, size: 24, font: 'Calibri'
       })],
       heading: HeadingLevel.HEADING_2,
-      spacing: { after: 80 }
+      spacing: { after: 160 }
     }));
-
-    // Edit reference — hyperlink when siteUrl is set, plain ID when not configured
-    if (GITHUB_CONFIG.siteUrl) {
-      const editUrl = GITHUB_CONFIG.siteUrl.replace(/\/$/, '') + '/' + formHtmlFile + '?edit=' + encodeURIComponent(sub.id);
-      children.push(new Paragraph({
-        children: [
-          new ExternalHyperlink({
-            children: [new TextRun({
-              text: '✎ Click to edit this submission',
-              color: '2563EB', underline: { type: 'single' }, size: 18, font: 'Calibri'
-            })],
-            link: editUrl
-          })
-        ],
-        spacing: { after: 200 }
-      }));
-    } else {
-      children.push(new Paragraph({
-        children: [
-          new TextRun({ text: 'Submission ID: ', bold: true, size: 18, font: 'Calibri', color: '64748B' }),
-          new TextRun({ text: sub.id, size: 18, font: 'Courier New', color: '475569' }),
-          new TextRun({ text: '  — To edit, open the form in your browser and click Edit in the Saved Submissions panel.', italics: true, size: 16, font: 'Calibri', color: '94A3B8' })
-        ],
-        spacing: { after: 200 }
-      }));
-    }
 
     // Field table
     const statusLabels = ['Disbursement Status', 'Loan Facility Account Status', 'LOC Status', 'Repayment Status'];
-    const fields = (sub.data.fields || []).filter(f => !statusLabels.includes(f.label));
+    const fields = (sub.data.fields || []).filter(f => {
+      const value = (f.value || '').toString().trim();
+      return !statusLabels.includes(f.label) && value !== '';
+    });
     if (fields.length > 0) {
       const tableRows = fields.map(f => new TableRow({
         children: [
@@ -568,7 +532,7 @@ function _generateWordDoc(store, formTitle, fileName, formHtmlFile) {
           }),
           new TableCell({
             children: [new Paragraph({
-              children: [new TextRun({ text: f.value || '—', size: 20, font: 'Calibri' })],
+              children: [new TextRun({ text: f.value, size: 20, font: 'Calibri' })],
               spacing: { before: 60, after: 60 }
             })],
             width: { size: 60, type: WidthType.PERCENTAGE },
@@ -593,12 +557,7 @@ function _generateWordDoc(store, formTitle, fileName, formHtmlFile) {
         spacing: { after: 100 }
       }));
 
-      if (!ct.rows || ct.rows.length === 0) {
-        children.push(new Paragraph({
-          children: [new TextRun({ text: 'No items', italics: true, color: '999999', size: 20, font: 'Calibri' })],
-          spacing: { after: 100 }
-        }));
-      } else {
+      if (ct.rows && ct.rows.length > 0) {
         const headerRow = new TableRow({
           children: ct.headers.map(h => new TableCell({
             children: [new Paragraph({
