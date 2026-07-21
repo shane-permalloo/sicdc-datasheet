@@ -415,7 +415,6 @@ function _renderSubmissionsPanel(store) {
           <tr>
             <th>#</th>
             <th>Saved At</th>
-            <th>Summary</th>
             <th class="no-print">Actions</th>
           </tr>
         </thead>
@@ -426,21 +425,10 @@ function _renderSubmissionsPanel(store) {
       const dateStr = date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
         + ' ' + date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
 
-      const summary = (sub.data.fields || [])
-        .filter(f => f.value
-          && f.label !== 'Disbursement Status'
-          && f.label !== 'Loan Facility Account Status'
-          && f.label !== 'LOC Status'
-          && f.label !== 'Repayment Status')
-        .slice(0, 3)
-        .map(f => f.value)
-        .join(' | ');
-
       html += `
           <tr>
             <td>${idx + 1}</td>
             <td style="white-space:nowrap;">${dateStr}</td>
-            <td>${_escapeHtml(summary) || '—'}</td>
             <td class="no-print">
               <div class="actions">
                 <button type="button" class="btn btn-ghost btn-sm"
@@ -511,6 +499,32 @@ function _generateWordDoc(store, formTitle, fileName, formHtmlFile) {
       heading: HeadingLevel.HEADING_2,
       spacing: { after: 160 }
     }));
+
+    // Edit reference — hyperlink when siteUrl is set, plain ID when not configured
+    if (GITHUB_CONFIG.siteUrl) {
+      const editUrl = GITHUB_CONFIG.siteUrl.replace(/\/$/, '') + '/' + formHtmlFile + '?edit=' + encodeURIComponent(sub.id);
+      children.push(new Paragraph({
+        children: [
+          new ExternalHyperlink({
+            children: [new TextRun({
+              text: '✎ Click to edit this submission',
+              color: '2563EB', underline: { type: 'single' }, size: 18, font: 'Calibri'
+            })],
+            link: editUrl
+          })
+        ],
+        spacing: { after: 200 }
+      }));
+    } else {
+      children.push(new Paragraph({
+        children: [
+          new TextRun({ text: 'Submission ID: ', bold: true, size: 18, font: 'Calibri', color: '64748B' }),
+          new TextRun({ text: sub.id, size: 18, font: 'Courier New', color: '475569' }),
+          new TextRun({ text: '  — To edit, open the form in your browser and click Edit in the Saved Submissions panel.', italics: true, size: 16, font: 'Calibri', color: '94A3B8' })
+        ],
+        spacing: { after: 200 }
+      }));
+    }
 
     // Field table
     const statusLabels = ['Disbursement Status', 'Loan Facility Account Status', 'LOC Status', 'Repayment Status'];
