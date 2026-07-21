@@ -289,9 +289,15 @@ function _collectCrudTables() {
   const crudTables = [];
 
   document.querySelectorAll('.related-section').forEach(section => {
+    // Exclude non-form UI sections such as the Saved Submissions panel.
+    if (section.classList.contains('no-print')) return;
+
     const title = section.querySelector('.section-title')?.textContent?.trim() || 'Related Items';
+    if (title === 'Saved Submissions') return;
+
     const table = section.querySelector('.crud-table');
     if (!table) return;
+    if (table.closest('#submissionsPanel')) return;
 
     const headers = [];
     const skipIndices = new Set();
@@ -415,6 +421,7 @@ function _renderSubmissionsPanel(store) {
           <tr>
             <th>#</th>
             <th>Saved At</th>
+            <th>Summary</th>
             <th class="no-print">Actions</th>
           </tr>
         </thead>
@@ -425,10 +432,21 @@ function _renderSubmissionsPanel(store) {
       const dateStr = date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
         + ' ' + date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
 
+      const summary = (sub.data.fields || [])
+        .filter(f => f.value
+          && f.label !== 'Disbursement Status'
+          && f.label !== 'Loan Facility Account Status'
+          && f.label !== 'LOC Status'
+          && f.label !== 'Repayment Status')
+        .slice(0, 3)
+        .map(f => f.value)
+        .join(' | ');
+
       html += `
           <tr>
             <td>${idx + 1}</td>
             <td style="white-space:nowrap;">${dateStr}</td>
+            <td>${_escapeHtml(summary) || '—'}</td>
             <td class="no-print">
               <div class="actions">
                 <button type="button" class="btn btn-ghost btn-sm"
@@ -562,7 +580,7 @@ function _generateWordDoc(store, formTitle, fileName, formHtmlFile) {
     }
 
     // CRUD tables within this submission
-    const crudTables = sub.data.crudTables || [];
+    const crudTables = (sub.data.crudTables || []).filter(ct => ct.title !== 'Saved Submissions');
     crudTables.forEach(ct => {
       children.push(new Paragraph({ text: '', spacing: { before: 200 } }));
       children.push(new Paragraph({
