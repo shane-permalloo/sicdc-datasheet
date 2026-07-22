@@ -38679,5 +38679,62 @@
       ],
       "crudTables": []
     }
+  },
+  {
+    "id": "mrvnv0ttukrr",
+    "savedAt": "2026-07-22T05:47:43.217Z",
+    "data": {
+      "fields": [
+        {
+          "label": "LOC - LF Account",
+          "value": "Exim 500 Million"
+        },
+        {
+          "label": "Disbursement Status",
+          "value": "Draft"
+        },
+        {
+          "label": "Project Reference",
+          "value": "LOC/Disb10/MOA/NANL/01"
+        },
+        {
+          "label": "Invoice Reference",
+          "value": "RA Bill No. 1 (May 2019)"
+        },
+        {
+          "label": "Loan Facility Account",
+          "value": "MOA-NANL(PMC)-01"
+        },
+        {
+          "label": "Borrower Name",
+          "value": "Government of Mauritius"
+        },
+        {
+          "label": "Disbursement Date",
+          "value": "2020-05-15"
+        },
+        {
+          "label": "Amount Disbursed",
+          "value": "87427.80"
+        },
+        {
+          "label": "Payment Authorisation Reference",
+          "value": "GOILOC-240(6)"
+        },
+        {
+          "label": "Date Of Call For RPS",
+          "value": "15-May-2020"
+        },
+        {
+          "label": "RPS Amount",
+          "value": "87,428"
+        },
+        {
+          "label": "SAGE Description",
+          "value": ""
+        }
+      ],
+      "crudTables": []
+    }
   }
 ]
