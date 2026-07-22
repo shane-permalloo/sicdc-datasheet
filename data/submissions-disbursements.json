@@ -35561,63 +35561,6 @@
     }
   },
   {
-    "id": "mrvns6cbefxl",
-    "savedAt": "2026-07-22T05:45:30.395Z",
-    "data": {
-      "fields": [
-        {
-          "label": "LOC - LF Account",
-          "value": "Exim 500 Million"
-        },
-        {
-          "label": "Disbursement Status",
-          "value": "Draft"
-        },
-        {
-          "label": "Project Reference",
-          "value": "LOC/Disb08/National Housing Development Company Ltd/05"
-        },
-        {
-          "label": "Invoice Reference",
-          "value": "RA Bill No. 17"
-        },
-        {
-          "label": "Loan Facility Account",
-          "value": "NHDC-01"
-        },
-        {
-          "label": "Borrower Name",
-          "value": "National Housing Development Company Ltd"
-        },
-        {
-          "label": "Disbursement Date",
-          "value": "2020-03-18"
-        },
-        {
-          "label": "Amount Disbursed",
-          "value": "1015791.00"
-        },
-        {
-          "label": "Payment Authorisation Reference",
-          "value": "GOILOC-240(1)"
-        },
-        {
-          "label": "Date Of Call For RPS",
-          "value": "18-Mar-2020"
-        },
-        {
-          "label": "RPS Amount",
-          "value": "1,015,791"
-        },
-        {
-          "label": "SAGE Description",
-          "value": ""
-        }
-      ],
-      "crudTables": []
-    }
-  },
-  {
     "id": "mrvnv0ttukrr",
     "savedAt": "2026-07-22T05:47:43.217Z",
     "data": {
