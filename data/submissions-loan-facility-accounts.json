@@ -791,12 +791,12 @@
   },
   {
     "id": "mqp0x191d594",
-    "savedAt": "2026-06-30T06:05:35.889Z",
+    "savedAt": "2026-07-28T06:46:01.834Z",
     "data": {
       "fields": [
         {
           "label": "LOC - LF Account",
-          "value": "Exim 190 Millions "
+          "value": "Exim 190 Million"
         },
         {
           "label": "Loan Facility Account Status",
@@ -850,81 +850,6 @@
             "Terminal Disbursement Date"
           ],
           "rows": []
-        },
-        {
-          "title": "Saved Submissions",
-          "headers": [
-            "#",
-            "Saved At",
-            "Summary"
-          ],
-          "rows": [
-            [
-              "1",
-              "25 Jun 2026 12:45",
-              "Exim 500 Millions | NHDC-01 | GOILOC-240(1)"
-            ],
-            [
-              "2",
-              "25 Jun 2026 13:27",
-              "Exim 500 Millions | MEL01-01 | GOILOC-240(2)"
-            ],
-            [
-              "3",
-              "25 Jun 2026 12:51",
-              "Exim 500 Millions | MOLG-INC-01 | GOILOC-240(3)"
-            ],
-            [
-              "4",
-              "25 Jun 2026 12:52",
-              "Exim 500 Millions | PMO-MDFA-01 | GOILOC-240(4)"
-            ],
-            [
-              "5",
-              "25 Jun 2026 19:53",
-              "Exim 500 Millions | PMO-FSL(PMC)-01 | GOILOC-240(5)"
-            ],
-            [
-              "6",
-              "25 Jun 2026 12:53",
-              "Exim 500 Millions | MOA-NANL(PMC)-01 | GOILOC-240(6)"
-            ],
-            [
-              "7",
-              "25 Jun 2026 12:54",
-              "Exim 500 Millions | MOLG-FFV-01 | GOILOC-240(7)"
-            ],
-            [
-              "8",
-              "25 Jun 2026 12:55",
-              "Exim 500 Millions | MOLG-PUMP-01 | GOILOC-240(8)"
-            ],
-            [
-              "9",
-              "25 Jun 2026 12:59",
-              "Exim 500 Millions | CEB-PV-01 | GOILOC-240(9)"
-            ],
-            [
-              "10",
-              "25 Jun 2026 13:00",
-              "Exim 500 Millions | PMO-FSL(W)-01 | GOILOC-240(10)"
-            ],
-            [
-              "11",
-              "25 Jun 2026 13:01",
-              "Exim 500 Millions | MOA-NANL(W)-01 | GOILOC-240(11)"
-            ],
-            [
-              "12",
-              "25 Jun 2026 13:03",
-              "Exim 190 Millions  | MEL02-01 | GOILOC-240(13)"
-            ],
-            [
-              "13",
-              "25 Jun 2026 13:02",
-              "Exim 190 Millions  | PMC-LAPC-01 | GOILOC-240(A-2)"
-            ]
-          ]
         }
       ]
     }
