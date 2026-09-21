@@ -206,25 +206,10 @@
     filter: brightness(1.05);
   }
 
-  /* ── LEGEND ─────────────────────────────────────────── */
-  #legend {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    height: 44px;
-    background: var(--surface);
-    border-top: 1px solid var(--border);
-    display: flex; align-items: center; gap: 24px;
-    padding: 0 32px;
-    z-index: 100;
-  }
-  .leg-item { display: flex; align-items: center; gap: 7px; }
-  .leg-dot  { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
-  .leg-dot.diamond { transform: rotate(45deg); }
-  .leg-label { font-size: .82rem; color: var(--muted); white-space: nowrap; }
-
   /* ── SCROLL CONTAINER ──────────────────────────────── */
   #scroll-wrap {
     position: fixed;
-    top: var(--header-h); bottom: 44px; left: 0; right: 0;
+    top: var(--header-h); bottom: 0; left: 0; right: 0;
     overflow: auto;
   }
 
@@ -403,14 +388,62 @@
     font-size: .76rem; font-weight: 600;
     color: var(--bar-text);
     letter-spacing: .02em;
-    overflow: hidden;
+    overflow: visible;
     white-space: nowrap;
     box-shadow: 0 2px 8px rgba(0,0,0,.25);
   }
   .bar::after {
     content: '';
-    position: absolute; inset: 0;
+    position: absolute;
+    inset: 0;
     border-radius: inherit;
+    pointer-events: none;
+  }
+  .bar::after {
+    background: var(--bar-gloss);
+  }
+  .bar-label {
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: rgba(255,255,255,.99);
+  }
+  .bar-tooltip {
+    position: fixed;
+    left: 0;
+    top: 0;
+    min-width: 220px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: 0 10px 24px rgba(0,0,0,.24);
+    font-size: .75rem;
+    font-weight: 400;
+    line-height: 1.45;
+    letter-spacing: 0;
+    white-space: normal;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    transform: translateY(0);
+    transition: opacity .12s ease;
+    z-index: 1000;
+  }
+  .bar-tooltip.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+  .bar-tooltip-title {
+    margin-bottom: 4px;
+    color: var(--text);
+    font-weight: 800;
+  }
+  .bar-tooltip-progress {
+    color: var(--accent);
+    font-weight: 800;
   }
   .bar.milestone-diamond {
     width: 22px;
@@ -628,7 +661,7 @@
 <div id="topbar">
   <div class="logo"><span>SICDC</span> LRPSMS &nbsp;·&nbsp; Project Rollout Plan</div>
   <div class="topbar-actions">
-    <div class="meta" id="updatedMeta">Updated: 25 June 2026</div>
+    <div class="meta" id="updatedMeta">Updated: 18 September 2026</div>
     <div class="today-badge" id="todayBadge">TODAY</div>
     <button class="settings-btn" id="settingsToggle" type="button" aria-expanded="false" aria-controls="settingsPanel">&#9881; Settings</button>
     <div class="settings-panel" id="settingsPanel" hidden>
@@ -662,18 +695,6 @@
     </div>
   </div>
 </div>
-
-<!-- LEGEND -->
-<div id="legend">
-  <div class="leg-item"><div class="leg-dot" style="background:var(--c-data)"></div><span class="leg-label">Migration Schedule & Data Migration/</span></div>
-  <div class="leg-item"><div class="leg-dot" style="background:var(--c-training)"></div><span class="leg-label">Training Schedule & Training</span></div>
-  <div class="leg-item"><div class="leg-dot" style="background:var(--c-access)"></div><span class="leg-label">User Matrix</span></div>
-  <div class="leg-item"><div class="leg-dot" style="background:var(--c-billing)"></div><span class="leg-label">Billing</span></div>
-  <div class="leg-item"><div class="leg-dot" style="background:var(--c-valid)"></div><span class="leg-label">Validation</span></div>
-  <div class="leg-item"><div class="leg-dot" style="background:var(--c-bug)"></div><span class="leg-label">Bug Management & Fixing</span></div>
-  <div class="leg-item"><div class="leg-dot diamond" style="background:var(--c-golive)"></div><span class="leg-label">Go-Live</span></div>
-</div>
-
 <!-- SCROLL WRAPPER -->
 <div id="scroll-wrap">
   <div id="gantt"></div>
@@ -690,8 +711,8 @@
 // dependsOn can push a task later than startDay when predecessors finish later.
 // Optional absolute startDate/endDate values can be used for exceptions.
 const PROJECT = {
-  startDate: "2026-06-22",
-  updatedLabel: "26 June 2026",
+  startDate: "2026-07-08",
+  updatedLabel: "18 September 2026",
   useBusinessDays: true,
   defaultDependencyLagDays: 1,
 };
@@ -699,12 +720,13 @@ const PROJECT = {
 const TASK_DEFINITIONS = [
   {
     id: "migration-prep",
-    workstream: "Migration Prep",
-    task: "Create SICDC migration data sheet",
-    description: "Collect and create  data required for migration on the data sheet.",
+    workstream: "Data sheet Prep",
+    task: "Create SICDC data sheet",
+    description: "Collect and create data required for data input on the data sheet.",
     team: "SICDC Team",
     startDay: 0,
-    durationDays: 11,
+    durationDays: 18,
+    progress: 100,
   },
   {
     id: "user-matrix",
@@ -713,7 +735,8 @@ const TASK_DEFINITIONS = [
     description: "Determine the users for the 3 levels of approvals and their roles in the system.",
     team: "SICDC Team",
     startDay: 0,
-    durationDays: 10,
+    durationDays: 13,
+    progress: 100,
   },
     {
     id: "training-schedule",
@@ -722,107 +745,96 @@ const TASK_DEFINITIONS = [
     description: "Confirm training calendar with participants.",
     team: "Project Coordinator",
     startDay: 5,
-    durationDays: 5,
+    durationDays: 8,
+    progress: 100,
   },
     {
     id: "migration-schedule",
-    workstream: "Migration Sch.",
-    task: "Coordinate and schedule migration session",
-    description: "Confirm migration timing and participants.",
+    workstream: "Data input Sch.",
+    task: "Coordinate and schedule data input session",
+    description: "Confirm data input timing and participants.",
     team: "Project Coordinator",
     startDay: 5,
-    durationDays: 5,
-  },
+    durationDays: 8,
+    progress: 100,
+  },  
+
   {
-    id: "CFO-Vetting",
-    workstream: "CFO Vetting",
+    id: "data-sheet-vetting",
+    workstream: "Data sheet Vet",
     task: "CFO vet the extracted data sheets",
     description: "CFO to vet the extracted data sheets for accuracy and completeness.",
     team: "Project Coordinator",  
     startDay: 11,
-    durationDays: 4,
+    durationDays: 5,
+    progress: 100,
+    dependsOn: ["migration-schedule"],
+  },
+    {
+    id: "data-input",
+    workstream: "Data input",
+    task: "Execute data input with SICDC team",
+    description: "Fill in the back-office using the data sheets",
+    team: "SICDC Team",
+    startDay: 23,
+    durationDays: 25,
+    progress: 100,
+    dependsOn: ["data-sheet-vetting"],
+  },
+    {
+    id: "billing-2",
+    workstream: "2nd Billing",
+    task: "Process outstanding 2nd billing",
+    description: "Close 2nd billing items.",
+    team: "Finance Team",
+    startDay: 13,
+    durationDays: 5,
+    progress: 100,
   },
   {
     id: "trainings",
     workstream: "Trainings",
     task: "Conduct operations officer training session",
-    description: "4 half day sessions with operation officers, IT admin and Managers",
+    description: "4 half day sessions with operation officers",
     team: "MNS Team",
-    startDay: 9,
+    startDay: 18,
     durationDays: 4,
+    progress: 100,
     dependsOn: ["training-schedule"],
     dependencyLagDays: 2,
   },
-  
+
   {
-    id: "data-migration",
-    workstream: "Data Migration",
-    task: "Execute data migration with SICDC team",
-    description: "Fill in the back-office using the data sheets",
-    team: "SICDC Team",
-    startDay: 15,
-    durationDays: 5,
-    dependsOn: ["migration-schedule"],
+    id: "Report vet",
+    workstream: "Reports",
+    task: "Verify migrated data and computation with CFO on reports",
+    description: "Validate migrated records and computations with CFO on reports.",
+    team: "CFO Team",
+    startDay: 45,
+    durationDays: 6,
+    progress: 80,
+    dependsOn: ["data-input"],
   },
   {
-    id: "billing",
-    workstream: "Billing",
-    task: "Process outstanding billing + hosting charges",
+    id: "billing-3",
+    workstream: "3rd Billing",
+    task: "Process outstanding 3rd billing + hosting charges",
     description: "Close billing and hosting charge items.",
     team: "Finance Team",
-    startDay: 15,
-    durationDays: 4,
-  },
-  {
-    id: "validation",
-    workstream: "Validation",
-    task: "Verify migrated data and computation with CFO",
-    description: "Validate migrated records and computations.",
-    team: "CFO Team",
-    startDay: 20,
-    durationDays: 4,
-    dependsOn: ["migration-schedule"],
-  },
-  {
-    id: "bug-log",
-    workstream: "Bug Management",
-    task: "Document and log identified minor bugs",
-    description: "Record minor issues found during validation.",
-    team: "MNS QA Team",
-    startDay: 24,
-    durationDays: 1,
-    dependsOn: ["data-migration"],
-    dependencyLagDays: 0,
-  },
-  {
-    id: "bug-fixing",
-    workstream: "Bug Fixing",
-    task: "Fix identified bugs in system",
-    description: "Resolve logged issues before final retest.",
-    team: "MNS Team",
-    startDay: 24,
-    durationDays: 4,
-    dependsOn: ["bug-log"],
-  },
-  {
-    id: "retest",
-    workstream: "Bug Retest",
-    task: "Retest fixed functionality with team",
-    description: "Confirm fixes with SICDC and QA team.",
-    team: "MNS QA Team",
-    startDay: 24,
-    durationDays: 1,
-    dependsOn: ["bug-fixing"],
+    startDay: 54,
+    durationDays: 5,
+    progress: 0,
   },
   {
     id: "go-live",
     workstream: "Go-Live",
-    task: "Execute official go-live activation",
+    task: " Approval of commissioning phase and execute official go-live activation",
     description: "Activate the production rollout.",
     team: "SICDC Team",
-    startDay: 23,
+    startDay: 58,
     durationDays: 1,
-    dependsOn: ["retest"],
+    progress: 0,
+    dependsOn: ["billing-3"],
     visual: "diamond",
   },
 ];
@@ -916,6 +928,7 @@ function resolveTasks(taskDefinitions) {
       endDate: end,
       dependencies,
       visual: task.visual || "bar",
+      progress: Math.min(100, Math.max(0, Number(task.progress) || 0)),
     };
 
     resolving.delete(task.id);
@@ -950,8 +963,8 @@ const minDate = new Date(Math.min(...taskDateBounds));
 const maxDate = new Date(Math.max(...taskDateBounds));
 
 // Pad 3 days on each side
-minDate.setDate(minDate.getDate() - 3);
-maxDate.setDate(maxDate.getDate() + 4);
+minDate.setDate(minDate.getDate() - 1);
+maxDate.setDate(maxDate.getDate() + 1);
 
 const allProjectDays = [];
 let cur = new Date(minDate);
@@ -1158,6 +1171,7 @@ const days = visibleProjectDays();
 const labelColumnCount = settings.hideDescriptions ? 2 : 3;
 const timelineStartColumn = labelColumnCount + 1;
 
+document.querySelectorAll('.bar-tooltip').forEach(tooltip => tooltip.remove());
 gantt.replaceChildren();
 gantt.style.gridTemplateColumns = settings.hideDescriptions
   ? `${COL_WS}px ${COL_ASGN}px repeat(${days.length}, ${COL_DAY}px)`
@@ -1233,7 +1247,7 @@ TASKS.forEach((t, rowIdx) => {
     if (t.dependencies.length) {
       const taskDeps = document.createElement('div');
       taskDeps.className = 'task-deps';
-      taskDeps.textContent = `Depends on: ${t.dependencies.join(', ')}`;
+      //taskDeps.textContent = `Depends on: ${t.dependencies.join(', ')}`;
       tkEl.appendChild(taskDeps);
     }
 
@@ -1290,8 +1304,36 @@ TASKS.forEach((t, rowIdx) => {
       bar.style.boxShadow  = `0 2px 12px ${color}55`;
       bar.style.zIndex     = '15';
       bar.style.left       = isDiamond ? `${(COL_DAY - milestoneSize) / 2}px` : '3px';
-      bar.title            = `${t.task}: ${t.start} to ${t.end}`;
-      if (!isDiamond && dur > 2) bar.textContent = t.ws;
+
+      if (!isDiamond && dur > 2) {
+        const label = document.createElement('span');
+        label.className = 'bar-label';
+        label.textContent = `${t.ws} · ${t.progress}%`;
+        bar.appendChild(label);
+      }
+
+      const tooltip = document.createElement('div');
+      tooltip.className = 'bar-tooltip';
+      appendText(tooltip, 'div', 'bar-tooltip-title', t.task);
+      appendText(tooltip, 'div', '', `${t.assignee} · ${t.start} to ${t.end}`);
+      appendText(tooltip, 'div', 'bar-tooltip-progress', `${t.progress}% complete`);
+      document.body.appendChild(tooltip);
+
+      function moveTooltip(event) {
+        const gap = 16;
+        const bounds = tooltip.getBoundingClientRect();
+        const left = Math.min(event.clientX + gap, window.innerWidth - bounds.width - 8);
+        const top = Math.min(event.clientY + gap, window.innerHeight - bounds.height - 8);
+        tooltip.style.left = `${Math.max(8, left)}px`;
+        tooltip.style.top = `${Math.max(8, top)}px`;
+      }
+
+      bar.addEventListener('mouseenter', event => {
+        tooltip.classList.add('visible');
+        moveTooltip(event);
+      });
+      bar.addEventListener('mousemove', moveTooltip);
+      bar.addEventListener('mouseleave', () => tooltip.classList.remove('visible'));
       cell.appendChild(bar);
     }
 
